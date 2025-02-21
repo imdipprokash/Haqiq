@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
@@ -6,6 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistor, store} from './src/redux/store';
 import {Provider} from 'react-redux';
+import LandingSrc from './src/screen/no-auth/LandingSrc';
 
 function HomeScreen() {
   return (
@@ -21,8 +21,8 @@ function RootStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
-        component={HomeScreen}
+        name="LandingSrc"
+        component={LandingSrc}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
