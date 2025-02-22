@@ -1,5 +1,7 @@
 import {Dimensions, PixelRatio, Platform} from 'react-native';
 
+export const BASE_URL = 'https://api.zevello.com/api';
+
 export const SIZES = {
   small: 10,
   medium: 20,

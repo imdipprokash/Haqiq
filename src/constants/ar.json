@@ -1,0 +1,18 @@
+{
+    "language": "Arabic",
+    "landingSrc": {
+        "onboarding_heading_1": "أخبار سريعة وموثوقة في",
+        "onboarding_heading_2": "70 كلمة بالذكاء الاصطناعي",
+        "onboarding_button": "ابدأ الآن",
+        "onboarding_terms": "بالمتابعة، أنت توافق على",
+        "clickable": "الشروط وسياسة الخصوصية لدينا."
+    },
+    "languageSrc": {
+        "back": "الرجوع إلى الفئات",
+        "select_country": "اختيار البلد",
+        "select_languages": "اختيار اللغة",
+        "complete": "إتمام",
+        "privacy": "الخصوصية والسياسة",
+        "terms": "الشروط والأحكام"
+    }
+}
