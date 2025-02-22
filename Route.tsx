@@ -11,8 +11,6 @@ const Stack = createNativeStackNavigator();
 const Route = (props: Props) => {
   const {accessToken} = useAppSelector(s => s.auth);
 
-  console.log(accessToken);
-
   return accessToken ? (
     <Stack.Navigator>
       <Stack.Screen

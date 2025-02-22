@@ -14,5 +14,10 @@
         "complete": "Complete",
         "privacy": "Privacy & Policy",
         "terms": "Terms & Conditions"
+    },
+    "homePage": {
+        "swipe_up": "Swipe Up For Next",
+        "swipe_right": "Swipe Right for details from",
+        "haqiq": "HAQIQ"
     }
 }
