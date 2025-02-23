@@ -6,6 +6,7 @@ import useGetData from '../../hooks/useGetData';
 import NewsCard from '../../components/NewsCard';
 import {SCREEN_HEIGHT} from '../../constants/constants';
 
+
 type Props = {};
 
 const HomeSrc = (props: Props) => {

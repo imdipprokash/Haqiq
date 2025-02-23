@@ -4,6 +4,7 @@ import {
   Image,
   ImageBackground,
   Pressable,
+  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -18,13 +19,18 @@ import {
 import i18n from '../../i18n';
 import {NewsItem} from '../types/types';
 import {BlurView} from '@react-native-community/blur';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 type Props = {};
 
 const NewsCard = ({item}: {item: NewsItem}) => {
-  console.log(item);
+  console.log(SCREEN_HEIGHT);
   return (
     <Animated.View style={[styles.card]}>
+      <StatusBar translucent backgroundColor={'transparent'} />
       {/* {!showBackButton && (
       <BackButton onPress={() => router.push("/auth/categories")} />
     )} */}
@@ -32,42 +38,37 @@ const NewsCard = ({item}: {item: NewsItem}) => {
         <Image source={{uri: item.image}} style={styles.image} />
         <View
           style={{
-            height: '40%',
-            overflow: 'hidden',
+            padding: 20,
           }}>
-          <View
-            style={{
-              padding: 20,
-            }}>
-            <Text
-              numberOfLines={2}
-              style={[
-                styles.title,
-                {
-                  textAlign: I18nManager.isRTL ? 'right' : 'left',
-                  fontFamily: I18nManager.isRTL
-                    ? 'Noto-Kufi-Arabic'
-                    : 'Poppins-Regular',
-                },
-              ]}>
-              {item.title}
-            </Text>
-            <Text
-              //   language={i18n.locale}
-              style={[
-                styles.description,
-                {
-                  textAlign: I18nManager.isRTL ? 'right' : 'left',
-                  fontFamily: I18nManager.isRTL
-                    ? 'Noto-Kufi-Arabic'
-                    : 'Poppins-Regular',
-                },
-              ]}
-              numberOfLines={9}>
-              {item.content}
-            </Text>
-          </View>
+          <Text
+            numberOfLines={2}
+            style={[
+              styles.title,
+              {
+                textAlign: I18nManager.isRTL ? 'right' : 'left',
+                fontFamily: I18nManager.isRTL
+                  ? 'Noto-Kufi-Arabic'
+                  : 'Poppins-Regular',
+              },
+            ]}>
+            {item.title}
+          </Text>
+          <Text
+            numberOfLines={SCREEN_HEIGHT < 735 ? 8 : 11}
+            style={[
+              styles.description,
+              {
+                textAlign: I18nManager.isRTL ? 'right' : 'left',
+                fontFamily: I18nManager.isRTL
+                  ? 'Noto-Kufi-Arabic'
+                  : 'Poppins-Regular',
+              },
+            ]}>
+            {item.content}
+          </Text>
         </View>
+
+        {/* bottom View */}
         <View style={styles.bottomItem}>
           <View
             style={[
@@ -92,26 +93,20 @@ const NewsCard = ({item}: {item: NewsItem}) => {
               {i18n.t('homePage.haqiq')}
             </Text>
           </View>
-          <View>
-            <BlurView style={styles.absolute} blurType="light" blurAmount={10}>
-              <Text>Hlw</Text>
-            </BlurView>
-          </View>
 
           {/* onPress={openBrowser} */}
-          <Pressable style={{height: 200, backgroundColor: 'red'}}>
+          <Pressable>
             <ImageBackground
               source={{uri: item.image}}
               style={styles.backgroundImage}>
-              <BlurView blurAmount={10} style={styles.blurContainer} />
-              <View style={styles.overlay} />
+              <BlurView blurAmount={8} style={styles.blurContainer} />
+
               <View
                 style={[
                   styles.sourceContainer,
                   {alignItems: I18nManager.isRTL ? 'flex-end' : 'flex-start'},
                 ]}>
                 <Text
-                  //   language={i18n.locale}
                   style={[
                     styles.source,
                     {textAlign: I18nManager.isRTL ? 'right' : 'left'},
@@ -155,39 +150,35 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   image: {
-    width: '100%',
+    width: wp(100),
     objectFit: 'cover',
-    height: '40%',
+    height: hp(40),
   },
   title: {
-    fontSize: SCREEN_WIDTH * 0.043,
+    fontSize: wp(5),
     color: '#fff',
-    marginBottom: SCREEN_WIDTH < 380 ? 8 : 16,
+    marginBottom: hp(1.3),
   },
   description: {
-    paddingVertical: 2,
-    // fontSize: wp('4%'),
+    paddingVertical: 1,
+    fontSize: wp(3.9),
     color: '#fff',
-    // lineHeight: hp('3%'),
-    overflow: 'hidden',
-    // textOverflow: 'ellipsis',
-    fontSize: SCREEN_WIDTH * 0.036,
-    letterSpacing: 0.9,
+    lineHeight: hp(3),
+    letterSpacing: 0.8,
   },
   bottomItem: {
-    height: '20%',
+    height: hp(20),
     position: 'absolute',
     width: '100%',
     bottom: 0,
     left: 0,
     right: 0,
+    gap: hp(1),
   },
   buttonContainer: {
-    // Flip button direction
-
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginVertical: SCREEN_WIDTH < 380 ? 10 : 16,
+    marginVertical: hp(1),
     paddingHorizontal: 16,
   },
   swipeText: {
@@ -203,7 +194,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     width: '100%',
-    height: 75,
+    height: hp(8),
     justifyContent: 'center',
     overflow: 'hidden',
   },
@@ -218,7 +209,6 @@ const styles = StyleSheet.create({
   sourceContainer: {
     padding: SCREEN_WIDTH < 380 ? 10 : 20,
     justifyContent: 'space-between',
-    // Align text correctly
     gap: SCREEN_WIDTH < 380 ? 0 : 2,
   },
   source: {

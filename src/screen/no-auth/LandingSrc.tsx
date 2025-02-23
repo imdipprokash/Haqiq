@@ -6,8 +6,6 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  Touchable,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useEffect, useRef} from 'react';
@@ -20,6 +18,10 @@ import {
 import Btn from '../../components/btn';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 type Props = {};
 
@@ -55,7 +57,7 @@ const LandingSrc = (props: Props) => {
           style={[
             styles.bottom,
             {
-              gap: i18n.language === 'en' ? normalize(18) : 15,
+              gap: i18n.language === 'en' ? hp(2) : 15,
               bottom: i18n.language === 'en' ? '13%' : '7%',
             },
           ]}>
@@ -63,7 +65,7 @@ const LandingSrc = (props: Props) => {
             style={[
               styles.taglineHighlight,
               {
-                fontSize: i18n.language === 'en' ? 30 : 25,
+                fontSize: i18n.language === 'en' ? wp(7) : 25,
                 fontFamily:
                   i18n.language === 'en'
                     ? 'Product Sans Bold'
@@ -76,7 +78,7 @@ const LandingSrc = (props: Props) => {
             style={[
               styles.taglineHighlight,
               {
-                fontSize: i18n.language === 'en' ? 30 : 25,
+                fontSize: i18n.language === 'en' ? wp(7) : 25,
                 fontFamily:
                   i18n.language === 'en'
                     ? 'Product Sans Bold'
@@ -108,7 +110,7 @@ const LandingSrc = (props: Props) => {
                     i18n.language === 'en'
                       ? 'Product Sans Regular'
                       : 'Noto-Kufi-Arabic',
-                  fontSize: i18n.language === 'en' ? normalize(13) : 13,
+                  fontSize: i18n.language === 'en' ? wp(3.5) : 13,
                 },
               ]}>
               {t('landingSrc.onboarding_terms')}{' '}
@@ -125,7 +127,7 @@ const LandingSrc = (props: Props) => {
                       i18n.language === 'en'
                         ? 'Product Sans Regular'
                         : 'Noto-Kufi-Arabic',
-                    fontSize: i18n.language === 'en' ? normalize(13) : 13,
+                    fontSize: i18n.language === 'en' ? wp(3.5) : 13,
                     borderBottomColor: 'white',
                     textDecorationLine: 'underline',
                   },
@@ -151,7 +153,7 @@ const styles = StyleSheet.create({
     height: '23%',
     objectFit: 'contain',
     alignSelf: 'center',
-    marginTop: '82%',
+    marginTop: hp(34.5),
   },
   image: {
     width: SCREEN_WIDTH,
@@ -160,25 +162,18 @@ const styles = StyleSheet.create({
   taglineHighlight: {
     color: '#fff',
     textAlign: 'center',
-    lineHeight: 45,
+    lineHeight: hp(4),
   },
   bottom: {
     position: 'absolute',
     display: 'flex',
-
     width: '100%',
     margin: 'auto',
     alignSelf: 'center',
   },
-  getStartedButtonText: {
-    color: '#000',
-    fontSize: normalize(16),
-    textAlign: 'center',
-    // lineHeight: deviceLanguage === "en" ? 20 : 25,
-  },
+
   termsText: {
     color: '#fff',
-
     textAlign: 'center',
   },
 });

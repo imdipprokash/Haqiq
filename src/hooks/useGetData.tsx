@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import {useAppSelector} from '../redux/store';
+import {useAppDispatch, useAppSelector} from '../redux/store';
 import {BASE_URL} from '../constants/constants';
+import {ADD_AUTH} from '../redux/slices/authInfo';
 
 type Props = {endPoint: string; method?: 'get' | 'delete'};
 
 const useGetData = ({endPoint, method}: Props) => {
-  const {accessToken, refreshToken} = useAppSelector(s => s.auth);
+  const {accessToken, refreshToken, countryCode, languageCode} = useAppSelector(
+    s => s.auth,
+  );
+  const dispatch = useAppDispatch();
 
-  console.log(accessToken, refreshToken);
   const [response, setResponse] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -30,9 +33,44 @@ const useGetData = ({endPoint, method}: Props) => {
         setLoading(false);
       })
       .catch((error: any) => {
-        console.log(error);
+        if (error?.response?.status === 401) UpdateAccessToken();
         setError(error);
         setLoading(false);
+      });
+  };
+
+  const UpdateAccessToken = () => {
+    // /auth/device/token/refresh
+
+    let config = {
+      method: method || 'post',
+      maxBodyLength: Infinity,
+      url: `${BASE_URL}/auth/device/token/refresh`,
+      headers: {
+        Authorization: accessToken,
+        'Content-Type': 'application/json',
+      },
+      data: {
+        refresh_token: refreshToken,
+      },
+    };
+    axios
+      .request(config)
+      .then(response => {
+        const authRes = response?.data?.access_token;
+        dispatch(
+          ADD_AUTH({
+            accessToken: authRes.access_token,
+            refreshToken: authRes?.refresh_token,
+            countryCode: countryCode || 'SA',
+            languageCode: languageCode || 'ar',
+            deviceId: '',
+          }),
+        );
+        getData();
+      })
+      .catch(error => {
+        setError(error);
       });
   };
   return {response, loading, error, getData};
