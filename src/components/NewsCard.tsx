@@ -23,17 +23,20 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import BackButton from './back-button';
+import {useNavigation} from '@react-navigation/native';
 
 type Props = {};
 
 const NewsCard = ({item}: {item: NewsItem}) => {
-  console.log(SCREEN_HEIGHT);
+  const nav = useNavigation<any>();
   return (
     <Animated.View style={[styles.card]}>
       <StatusBar translucent backgroundColor={'transparent'} />
       {/* {!showBackButton && (
-      <BackButton onPress={() => router.push("/auth/categories")} />
+     
     )} */}
+      <BackButton onPress={() => nav.navigate('CategorySrc')} />
       <View style={styles.slideContainer}>
         <Image source={{uri: item.image}} style={styles.image} />
         <View

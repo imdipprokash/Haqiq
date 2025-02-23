@@ -1,17 +1,19 @@
-import {Pressable, StyleSheet, I18nManager} from 'react-native';
+import {Pressable, StyleSheet, I18nManager, Image} from 'react-native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 export default function BackButton({onPress}: {onPress: () => void}) {
-  let isRTL = true;
+  let isRTL = I18nManager.isRTL;
   return (
     <Pressable
       onPress={onPress}
       style={[styles.backButton, isRTL && styles.backButtonRTL]}>
-      {/* <Ionicons
-        name={isRTL ? "arrow-forward" : "arrow-back"} // Adjust icon direction
-        size={20}
-        color="#fff"
-        style={styles.back_icon}
-      /> */}
+      <Image
+        source={require('../../assets/images/BackIcon.png')}
+        style={{width: wp(5), height: hp(2)}}
+      />
     </Pressable>
   );
 }
@@ -19,12 +21,17 @@ export default function BackButton({onPress}: {onPress: () => void}) {
 const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
-    top: '4%',
+    top: '5.5%',
     left: '5%', // Default LTR position
     zIndex: 1,
     alignItems: 'center',
     flexDirection: 'row',
     display: 'flex',
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    borderRadius: 99999,
+    width: 40,
+    height: 40,
   },
   backButtonRTL: {
     left: 'auto',
