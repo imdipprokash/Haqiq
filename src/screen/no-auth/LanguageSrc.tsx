@@ -38,7 +38,6 @@ const LanguageSrc = (props: Props) => {
   const [selectLanguage, setSelectedLanguages] = useState<string>();
   const dispatch = useAppDispatch();
   const changeLanguage = async (lng: string) => {
-    await i18n.changeLanguage(lng);
     setLanguage(lng);
     if (lng === 'ar') {
       I18nManager.forceRTL(true);
@@ -130,6 +129,7 @@ const LanguageSrc = (props: Props) => {
     <ImageBackground
       source={require('../../../assets/images/background.png')}
       resizeMode="cover"
+      imageStyle={{opacity: 1}}
       style={[
         styles.image,
         {direction: selectLanguage === 'ar' ? 'rtl' : 'ltr'},

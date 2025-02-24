@@ -14,22 +14,8 @@ const Text: React.FC<CustomTextProps> = ({
   language,
   ...props
 }) => {
-  const textDirection = language === 'ar' ? 'rtl' : 'ltr';
-
-  useEffect(() => {
-    I18nManager.forceRTL(language === 'ar');
-    I18nManager.allowRTL(language === 'ar');
-  }, [language]);
-
   return (
-    <RNText
-      {...props}
-      style={[
-        {
-          writingDirection: textDirection,
-        },
-        style,
-      ]}>
+    <RNText {...props} style={[style]}>
       {children}
     </RNText>
   );

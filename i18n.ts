@@ -47,6 +47,7 @@ const languageDetectorPlugin: LanguageDetectorPlugin = {
     try {
       // Save the user's language choice in AsyncStorage
       await AsyncStorage.setItem(STORE_LANGUAGE_KEY, language);
+
       if (language === 'ar') {
         I18nManager.forceRTL(true); // Force RTL layout
         I18nManager.allowRTL(true); // Allow RTL layout

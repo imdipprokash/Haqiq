@@ -26,16 +26,13 @@ import {
 import BackButton from './back-button';
 import {useNavigation} from '@react-navigation/native';
 
-type Props = {};
-
 const NewsCard = ({item}: {item: NewsItem}) => {
   const nav = useNavigation<any>();
+
   return (
     <Animated.View style={[styles.card]}>
       <StatusBar translucent backgroundColor={'transparent'} />
-      {/* {!showBackButton && (
-     
-    )} */}
+
       <BackButton onPress={() => nav.navigate('CategorySrc')} />
       <View style={styles.slideContainer}>
         <Image source={{uri: item.image}} style={styles.image} />
@@ -48,7 +45,6 @@ const NewsCard = ({item}: {item: NewsItem}) => {
             style={[
               styles.title,
               {
-                textAlign: I18nManager.isRTL ? 'right' : 'left',
                 fontFamily: I18nManager.isRTL
                   ? 'Noto-Kufi-Arabic'
                   : 'Poppins-Regular',
@@ -61,7 +57,6 @@ const NewsCard = ({item}: {item: NewsItem}) => {
             style={[
               styles.description,
               {
-                textAlign: I18nManager.isRTL ? 'right' : 'left',
                 fontFamily: I18nManager.isRTL
                   ? 'Noto-Kufi-Arabic'
                   : 'Poppins-Regular',
@@ -73,59 +68,37 @@ const NewsCard = ({item}: {item: NewsItem}) => {
 
         {/* bottom View */}
         <View style={styles.bottomItem}>
-          <View
-            style={[
-              styles.buttonContainer,
-              {flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row'},
-            ]}>
+          <View style={[styles.buttonContainer, {flexDirection: 'row'}]}>
             <Text
               style={
                 (styles.swipeText,
                 {
                   color: 'white',
-                  textAlign: I18nManager.isRTL ? 'right' : 'left',
                 })
               }>
               {i18n.t('homePage.swipe_up')}
             </Text>
-            <Text
-              style={[
-                styles.button,
-                {fontWeight: I18nManager.isRTL ? '600' : 'bold'},
-              ]}>
-              {i18n.t('homePage.haqiq')}
-            </Text>
+            <Text style={[styles.button]}>{i18n.t('homePage.haqiq')}</Text>
           </View>
 
-          {/* onPress={openBrowser} */}
-          <Pressable>
-            <ImageBackground
-              source={{uri: item.image}}
-              style={styles.backgroundImage}>
-              <BlurView blurAmount={8} style={styles.blurContainer} />
+          <ImageBackground
+            source={{uri: item.image}}
+            style={styles.backgroundImage}>
+            <Pressable onPress={() => {}}>
+              <View style={[styles.sourceContainer]}>
+                {item.image && (
+                  <BlurView blurAmount={8} style={styles.blurContainer} />
+                )}
 
-              <View
-                style={[
-                  styles.sourceContainer,
-                  {alignItems: I18nManager.isRTL ? 'flex-end' : 'flex-start'},
-                ]}>
-                <Text
-                  style={[
-                    styles.source,
-                    {textAlign: I18nManager.isRTL ? 'right' : 'left'},
-                  ]}>
+                <Text style={[styles.source]}>
                   {i18n.t('homePage.swipe_right')}({item.source.name})
                 </Text>
-                <Text
-                  style={[
-                    styles.timeAgo,
-                    {textAlign: I18nManager.isRTL ? 'right' : 'left'},
-                  ]}>
+                <Text style={[styles.timeAgo]}>
                   {/* {timeAgo(item.published_at)} */}
                 </Text>
               </View>
-            </ImageBackground>
-          </Pressable>
+            </Pressable>
+          </ImageBackground>
         </View>
       </View>
     </Animated.View>
@@ -205,10 +178,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     opacity: 1,
   },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-  },
+
   sourceContainer: {
     padding: SCREEN_WIDTH < 380 ? 10 : 20,
     justifyContent: 'space-between',

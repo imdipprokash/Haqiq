@@ -1,17 +1,25 @@
-import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  I18nManager,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 import {NewsItem, AdItem} from '../../types/types';
 import useGetData from '../../hooks/useGetData';
 import NewsCard from '../../components/NewsCard';
 import {SCREEN_HEIGHT} from '../../constants/constants';
-
+import i18n from '../../../i18n';
+import {useAppSelector} from '../../redux/store';
 
 type Props = {};
 
 const HomeSrc = (props: Props) => {
   const [news, setNews] = useState<NewsItem[]>([]);
-
+  const {languageCode} = useAppSelector(s => s.auth);
   const {response: NewsList, getData: getNewsList} = useGetData({
     endPoint: '/news',
   });
@@ -24,10 +32,10 @@ const HomeSrc = (props: Props) => {
   useEffect(() => {
     getNewsList();
   }, []);
-
   return (
     <View style={{flex: 1}}>
       <FlatList
+        style={{direction: languageCode === 'ar' ? 'rtl' : 'ltr'}}
         keyExtractor={item => item.id.toString()}
         data={news}
         renderItem={item => <NewsCard item={item?.item} />}

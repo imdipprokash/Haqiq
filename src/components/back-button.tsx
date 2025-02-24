@@ -3,16 +3,20 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {useAppSelector} from '../redux/store';
+import {View} from 'react-native-reanimated/lib/typescript/Animated';
 
 export default function BackButton({onPress}: {onPress: () => void}) {
-  let isRTL = I18nManager.isRTL;
+  const {languageCode} = useAppSelector(s => s.auth);
   return (
-    <Pressable
-      onPress={onPress}
-      style={[styles.backButton, isRTL && styles.backButtonRTL]}>
+    <Pressable onPress={onPress} style={[styles.backButton]}>
       <Image
         source={require('../../assets/images/BackIcon.png')}
-        style={{width: wp(5), height: hp(2)}}
+        style={{
+          width: wp(5),
+          height: hp(2),
+          transform: [{rotate: languageCode === 'ar' ? '180deg' : '0deg'}],
+        }}
       />
     </Pressable>
   );
@@ -22,7 +26,7 @@ const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
     top: '5.5%',
-    left: '5%', // Default LTR position
+    marginHorizontal: '5%', // Default LTR position
     zIndex: 1,
     alignItems: 'center',
     flexDirection: 'row',

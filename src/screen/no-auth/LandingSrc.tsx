@@ -45,6 +45,7 @@ const LandingSrc = (props: Props) => {
     <ImageBackground
       source={require('../../../assets/images/background.png')}
       resizeMode="cover"
+      imageStyle={{opacity: 1}}
       style={styles.image}>
       <View style={{paddingTop: SIZES.large, padding: SIZES.medium, flex: 1}}>
         <StatusBar translucent backgroundColor={'transparent'} />
