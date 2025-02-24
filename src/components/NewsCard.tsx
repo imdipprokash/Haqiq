@@ -80,25 +80,30 @@ const NewsCard = ({item}: {item: NewsItem}) => {
             </Text>
             <Text style={[styles.button]}>{i18n.t('homePage.haqiq')}</Text>
           </View>
+          <View style={{overflow: 'hidden'}}>
+            <ImageBackground
+              blurRadius={6}
+              source={{uri: item.image}}
+              style={styles.backgroundImage}>
+              <View style={styles.overlay} />
+              {/* <BlurView
+                blurAmount={10}
+                style={styles.blurContainer}
+                overlayColor="transparent"
+              /> */}
 
-          <ImageBackground
-            source={{uri: item.image}}
-            style={styles.backgroundImage}>
-            <Pressable onPress={() => {}}>
-              <View style={[styles.sourceContainer]}>
-                {item.image && (
-                  <BlurView blurAmount={8} style={styles.blurContainer} />
-                )}
-
-                <Text style={[styles.source]}>
-                  {i18n.t('homePage.swipe_right')}({item.source.name})
-                </Text>
-                <Text style={[styles.timeAgo]}>
-                  {/* {timeAgo(item.published_at)} */}
-                </Text>
-              </View>
-            </Pressable>
-          </ImageBackground>
+              <Pressable onPress={() => {}}>
+                <View style={[styles.sourceContainer]}>
+                  <Text style={[styles.source]}>
+                    {i18n.t('homePage.swipe_right')}({item.source.name})
+                  </Text>
+                  <Text style={[styles.timeAgo]}>
+                    {/* {timeAgo(item.published_at)} */}
+                  </Text>
+                </View>
+              </Pressable>
+            </ImageBackground>
+          </View>
         </View>
       </View>
     </Animated.View>
@@ -170,13 +175,17 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     width: '100%',
-    height: hp(8),
+    height: 75, //hp(8)
     justifyContent: 'center',
     overflow: 'hidden',
   },
   blurContainer: {
     ...StyleSheet.absoluteFillObject,
     opacity: 1,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
   },
 
   sourceContainer: {

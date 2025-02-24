@@ -1,8 +1,8 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {normalize, SIZES, TEXT_SIZE} from '../constants/constants';
+import {normalize, TEXT_SIZE} from '../constants/constants';
 import {useTranslation} from 'react-i18next';
-import {Squircle} from 'corner-smoothing';
+import {useAppSelector} from '../redux/store';
 
 type Props = {
   text: string;
@@ -11,19 +11,20 @@ type Props = {
 
 const Btn = ({text, onPress}: Props) => {
   const {i18n} = useTranslation();
+  const {languageCode} = useAppSelector(s => s.auth);
   return (
     <Pressable style={styles.btnStyle} onPress={onPress}>
       <Text
         style={[
           styles.textStyle,
           {
-            fontSize: i18n.language === 'en' ? 22 : 20,
-            fontWeight: i18n.language === 'en' ? 400 : 600,
+            fontSize: languageCode === 'en' ? 22 : 20,
+            fontWeight: languageCode === 'en' ? 400 : 600,
             fontFamily:
-              i18n.language === 'en'
+              languageCode === 'en'
                 ? 'Product Sans Regular'
                 : 'Noto-Kufi-Arabic',
-            paddingVertical: i18n.language === 'en' ? 20 : 10,
+            paddingVertical: languageCode === 'en' ? 20 : 10,
           },
         ]}>
         {text}

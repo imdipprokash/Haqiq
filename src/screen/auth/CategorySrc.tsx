@@ -19,13 +19,13 @@ import {
 import {SCREEN_HEIGHT, SCREEN_WIDTH, SIZES} from '../../constants/constants';
 import {useAppDispatch, useAppSelector} from '../../redux/store';
 import {REMOVE_AUTH} from '../../redux/slices/authInfo';
-import {BlurView} from '@react-native-community/blur';
+// import {BlurView} from '@react-native-community/blur';
 import {Category, NewsItem} from '../../types/types';
 import useGetData from '../../hooks/useGetData';
 
 type Props = {};
 
-const CategorySrc = (props: Props) => {
+const CategorySrc = () => {
   const [refresh, setRefresh] = useState(false);
   const dispatch = useAppDispatch();
   const {languageCode} = useAppSelector(s => s.auth);
@@ -46,38 +46,40 @@ const CategorySrc = (props: Props) => {
   });
 
   useEffect(() => {
-    setCategories(response?.data);
+    response?.data && setCategories(response?.data);
   }, [response]);
   useEffect(() => {
-    // dispatch(REMOVE_AUTH()); edges={['top']}
+    // dispatch(REMOVE_AUTH());
     getData();
-    setRefresh(!refresh);
+    setInput('');
   }, []);
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: 'black',
-        direction: isRTL ? 'rtl' : 'ltr',
-      }}>
-      <StatusBar barStyle={'light-content'} />
-      <View style={styles.container}>
+    <ImageBackground
+      source={require('../../../assets/images/background.png')}
+      // resizeMode="cover"
+      style={[
+        {width: SCREEN_WIDTH, height: SCREEN_HEIGHT},
+        {direction: languageCode === 'ar' ? 'rtl' : 'ltr'},
+      ]}>
+      <View
+        style={{
+          width: SCREEN_WIDTH,
+          height: SCREEN_WIDTH,
+          marginVertical: SIZES.large,
+        }}>
+        <StatusBar barStyle={'light-content'} />
         <View style={styles.container}>
-          <View
-            style={[styles.header, isRTL && {flexDirection: 'row-reverse'}]}>
+          <View style={[styles.header]}>
             <TouchableOpacity
               // onPress={() => router.push("/auth")}
-              style={[
-                styles.backButton,
-                isRTL && {flexDirection: 'row-reverse'},
-              ]}>
+              style={[styles.backButton]}>
               {/* <Ionicons
               name={isRTL ? "arrow-forward" : "arrow-back"}
               size={24}
               color="white"
             /> */}
               <Text style={[styles.backText, isRTL && {textAlign: 'right'}]}>
-                {isRTL ? 'العودة إلى القائمة' : 'Back to Feed'}
+                {isRTL ? 'العودة إلى القائمة' : 'Back to Feeds'}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {}}>
@@ -88,7 +90,7 @@ const CategorySrc = (props: Props) => {
           <View
             style={[
               styles.inputContainer,
-              isRTL && {flexDirection: 'row-reverse'},
+              // isRTL && {flexDirection: 'row-reverse'},
             ]}>
             <TextInput
               style={[styles.searchInput, isRTL && {textAlign: 'right'}]}
@@ -114,12 +116,16 @@ const CategorySrc = (props: Props) => {
             </View>
           ) : searchResult.length ? (
             <>
-              <Text style={[styles.title, isRTL && {textAlign: 'right'}]}>
+              <Text style={[styles.title]}>
                 {isRTL ? 'نتائج البحث' : 'Search Results'}
               </Text>
-              <ScrollView contentContainerStyle={styles.searchContainerDiv}>
+              <ScrollView
+                contentContainerStyle={[
+                  styles.searchContainerDiv,
+                  {direction: isRTL ? 'rtl' : 'ltr'},
+                ]}>
                 {searchResult.map(result => (
-                  <View key={result.id} style={styles.searchContainer}>
+                  <View key={result.id} style={[styles.searchContainer]}>
                     <TouchableOpacity
                       style={styles.searchContainer}
                       // onPress={() => router.push("/auth")}
@@ -145,17 +151,12 @@ const CategorySrc = (props: Props) => {
                         />
                       </View>
                       <View style={{flex: 1}}>
-                        <Text
-                          style={[
-                            {color: 'white', fontSize: 16},
-                            isRTL && {textAlign: 'right'},
-                          ]}>
+                        <Text style={[{color: 'white', fontSize: 16}]}>
                           {result.title}
                         </Text>
                         <Text
                           style={[
                             {color: 'white', fontSize: 16, marginTop: 10},
-                            isRTL && {textAlign: 'right'},
                           ]}>
                           {/* {timeAgo(result.created_at)} */}
                         </Text>
@@ -194,7 +195,7 @@ const CategorySrc = (props: Props) => {
           )}
         </View>
       </View>
-    </SafeAreaView>
+    </ImageBackground>
   );
 };
 
@@ -281,11 +282,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     alignItems: 'center',
   },
-  image: {
-    width: 80,
-    height: 80,
-    resizeMode: 'cover',
-  },
+
   content: {
     flex: 1,
     padding: 12,

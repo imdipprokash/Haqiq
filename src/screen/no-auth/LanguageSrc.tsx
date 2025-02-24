@@ -22,15 +22,15 @@ import {
 import {Country, Language} from '../../types/types';
 import useGetData from '../../hooks/useGetData';
 import useAxios from '../../hooks/useAxios';
-import {useAppDispatch} from '../../redux/store';
+import {useAppDispatch, useAppSelector} from '../../redux/store';
 import {ADD_AUTH, AuthType} from '../../redux/slices/authInfo';
 
 type Props = {};
 
 const LanguageSrc = (props: Props) => {
   const logoOpacity = useRef(new Animated.Value(0)).current;
-
-  const [language, setLanguage] = useState(i18n.language);
+  const auth = useAppSelector(s => s.auth);
+  const [language, setLanguage] = useState(i18n.language || 'en');
 
   const [countries, setCountries] = useState<Country[]>([]);
   const [selectedCountry, setSelectCountry] = useState<string>();
@@ -39,6 +39,7 @@ const LanguageSrc = (props: Props) => {
   const dispatch = useAppDispatch();
   const changeLanguage = async (lng: string) => {
     setLanguage(lng);
+    setSelectedLanguages(lng);
     if (lng === 'ar') {
       I18nManager.forceRTL(true);
       I18nManager.allowRTL(true);
@@ -79,7 +80,6 @@ const LanguageSrc = (props: Props) => {
     },
     endPoint: '/auth/device/token',
   });
-  console.log(authRes && authRes);
   useEffect(() => {
     if (!countryListLoading) {
       setCountries(countryList?.data);
@@ -89,6 +89,7 @@ const LanguageSrc = (props: Props) => {
       console.log(`/countries/${selectedCountry}/languages`, languageList);
       setLanguages(languageList);
     }
+
     if (authRes) {
       dispatch(
         ADD_AUTH({
@@ -103,7 +104,7 @@ const LanguageSrc = (props: Props) => {
   }, [countryList, languageList, authRes]);
 
   useEffect(() => {
-    getLanguage();
+    if (selectedCountry) getLanguage();
   }, [selectedCountry]);
 
   useEffect(() => {
@@ -143,12 +144,12 @@ const LanguageSrc = (props: Props) => {
               {
                 fontSize: 20,
                 fontFamily:
-                  i18n.language === 'en'
+                  selectLanguage === 'en'
                     ? 'Product Sans Regular'
                     : 'Noto-Kufi-Arabic',
               },
             ]}>
-            {t('languageSrc.select_country')}
+            {selectLanguage === 'ar' ? 'اختيار البلد' : 'Select Country'}
           </Text>
           <View style={styles.countryGrid}>
             {countries?.map(country => (
@@ -196,12 +197,12 @@ const LanguageSrc = (props: Props) => {
               {
                 fontSize: 20,
                 fontFamily:
-                  i18n.language === 'en'
+                  selectLanguage === 'en'
                     ? 'Product Sans Regular'
                     : 'Noto-Kufi-Arabic',
               },
             ]}>
-            {t('languageSrc.select_languages')}
+            {selectLanguage === 'ar' ? 'اختر اللغة' : 'Select Language'}
           </Text>
           <View style={styles.countryGrid}>
             {language &&
@@ -209,7 +210,7 @@ const LanguageSrc = (props: Props) => {
                 <Pressable
                   key={item.id}
                   onPress={() => {
-                    setSelectedLanguages(item.code);
+                    changeLanguage(item.code);
                   }}
                   style={[
                     styles.button,
@@ -244,9 +245,8 @@ const LanguageSrc = (props: Props) => {
           ]}>
           <Animated.View>
             <Btn
-              text={t('languageSrc.complete')}
+              text={selectLanguage === 'ar' ? 'اكتمل' : 'Complete'}
               onPress={() => {
-                changeLanguage(selectLanguage || 'SA');
                 usePostHandler();
               }}
             />

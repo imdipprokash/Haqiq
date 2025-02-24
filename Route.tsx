@@ -6,6 +6,7 @@ import LanguageSrc from './src/screen/no-auth/LanguageSrc';
 import {useAppSelector} from './src/redux/store';
 import HomeSrc from './src/screen/auth/HomeSrc';
 import CategorySrc from './src/screen/auth/CategorySrc';
+import Temp from './src/screen/auth/Temp';
 
 type Props = {};
 const Stack = createNativeStackNavigator();
@@ -13,7 +14,6 @@ const Route = (props: Props) => {
   const {accessToken, languageCode} = useAppSelector(s => s.auth);
 
   useEffect(() => {
-    console.log(I18nManager.isRTL, languageCode);
     if (languageCode === 'ar') {
       I18nManager.forceRTL(true), I18nManager.allowRTL(true);
     } else {
@@ -24,6 +24,12 @@ const Route = (props: Props) => {
 
   return accessToken ? (
     <Stack.Navigator>
+      {/* Temp */}
+      {/* <Stack.Screen
+        name="Temp"
+        component={Temp}
+        options={{headerShown: false}}
+      /> */}
       <Stack.Screen
         name="HomeSrc"
         component={HomeSrc}
@@ -34,8 +40,6 @@ const Route = (props: Props) => {
         component={CategorySrc}
         options={{headerShown: false}}
       />
-
-      {/*  */}
     </Stack.Navigator>
   ) : (
     <Stack.Navigator>
