@@ -1,4 +1,4 @@
-import {I18nManager, StyleSheet, Text, View} from 'react-native';
+import {I18nManager, StyleSheet} from 'react-native';
 import React, {useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LandingSrc from './src/screen/no-auth/LandingSrc';
@@ -6,11 +6,10 @@ import LanguageSrc from './src/screen/no-auth/LanguageSrc';
 import {useAppSelector} from './src/redux/store';
 import HomeSrc from './src/screen/auth/HomeSrc';
 import CategorySrc from './src/screen/auth/CategorySrc';
-import Temp from './src/screen/auth/Temp';
+import UpdateLanguageSrc from './src/screen/auth/UpdateLanguageSrc';
 
-type Props = {};
 const Stack = createNativeStackNavigator();
-const Route = (props: Props) => {
+const Route = () => {
   const {accessToken, languageCode} = useAppSelector(s => s.auth);
 
   useEffect(() => {
@@ -22,14 +21,10 @@ const Route = (props: Props) => {
     }
   }, [I18nManager]);
 
+  console.log(accessToken, 'Token==>');
+
   return accessToken ? (
-    <Stack.Navigator>
-      {/* Temp */}
-      {/* <Stack.Screen
-        name="Temp"
-        component={Temp}
-        options={{headerShown: false}}
-      /> */}
+    <Stack.Navigator initialRouteName="HomeSrc">
       <Stack.Screen
         name="HomeSrc"
         component={HomeSrc}
@@ -40,9 +35,14 @@ const Route = (props: Props) => {
         component={CategorySrc}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="UpdateLanguageSrc"
+        component={UpdateLanguageSrc}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   ) : (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="LandingSrc">
       <Stack.Screen
         name="LandingSrc"
         component={LandingSrc}

@@ -7,10 +7,10 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
-import {t} from 'i18next';
 import i18n from '../../../i18n';
 import Btn from '../../components/btn';
 import {
@@ -23,18 +23,30 @@ import {Country, Language} from '../../types/types';
 import useGetData from '../../hooks/useGetData';
 import useAxios from '../../hooks/useAxios';
 import {useAppDispatch, useAppSelector} from '../../redux/store';
-import {ADD_AUTH, AuthType} from '../../redux/slices/authInfo';
+import {ADD_AUTH} from '../../redux/slices/authInfo';
+import {useNavigation} from '@react-navigation/native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 type Props = {};
 
-const LanguageSrc = (props: Props) => {
+const UpdateLanguageSrc = (props: Props) => {
+  const dispatch = useAppDispatch();
+  const nav = useNavigation<any>();
+  const {countryCode, languageCode} = useAppSelector(s => s.auth);
   const logoOpacity = useRef(new Animated.Value(0)).current;
   const [language, setLanguage] = useState(i18n.language || 'en');
   const [countries, setCountries] = useState<Country[]>([]);
-  const [selectedCountry, setSelectCountry] = useState<string>();
+  const [selectedCountry, setSelectCountry] = useState<string>(
+    countryCode || '',
+  );
   const [languages, setLanguages] = useState<Language[]>([]);
-  const [selectLanguage, setSelectedLanguages] = useState<string>();
-  const dispatch = useAppDispatch();
+  const [selectLanguage, setSelectedLanguages] = useState<string>(
+    languageCode || '',
+  );
+
   const changeLanguage = async (lng: string) => {
     setLanguage(lng);
     setSelectedLanguages(lng);
@@ -90,7 +102,7 @@ const LanguageSrc = (props: Props) => {
   }, [countryList, languageList]);
 
   useEffect(() => {
-    if (authRes) {
+    if (authRes?.access_token) {
       dispatch(
         ADD_AUTH({
           accessToken: authRes?.access_token,
@@ -100,6 +112,8 @@ const LanguageSrc = (props: Props) => {
           deviceId: '',
         }),
       );
+
+      nav.navigate('HomeSrc');
     }
   }, [authRes]);
 
@@ -125,18 +139,46 @@ const LanguageSrc = (props: Props) => {
       ]),
     ).start(); // Start the animation loop
   }, []);
-
+  const isRTL = selectLanguage === 'ar';
   return (
-    <ImageBackground
-      source={require('../../../assets/images/background.png')}
-      resizeMode="cover"
-      imageStyle={{opacity: 1}}
+    <View //ImageBackground
+      // source={require('../../../assets/images/background.png')}
+      // resizeMode="cover"
+      // imageStyle={{opacity: 1}}
       style={[
         styles.image,
-        {direction: selectLanguage === 'ar' ? 'rtl' : 'ltr'},
+        {direction: isRTL ? 'rtl' : 'ltr', backgroundColor: '#000'},
       ]}>
       <View style={{paddingTop: SIZES.large, padding: SIZES.medium, flex: 1}}>
         <StatusBar translucent backgroundColor={'transparent'} />
+        <View style={[styles.header]}>
+          <TouchableOpacity
+            style={[styles.backButton]}
+            onPress={() => nav.navigate('HomeSrc')}>
+            <Image
+              source={require('../../../assets/images/BackIcon.png')}
+              style={{
+                width: wp(5),
+                height: hp(2),
+                transform: [{rotate: isRTL ? '180deg' : '0deg'}],
+              }}
+            />
+            <Text
+              style={[
+                styles.backText,
+                isRTL && {textAlign: 'right'},
+                {
+                  fontFamily:
+                    selectLanguage === 'en'
+                      ? 'Product Sans Regular'
+                      : 'Noto-Kufi-Arabic',
+                },
+              ]}>
+              {isRTL ? 'الإعدادات' : 'Settings'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
         <View>
           <Text
             style={[
@@ -149,7 +191,7 @@ const LanguageSrc = (props: Props) => {
                     : 'Noto-Kufi-Arabic',
               },
             ]}>
-            {selectLanguage === 'ar' ? 'اختيار البلد' : 'Select Country'}
+            {isRTL ? 'اختيار البلد' : 'Select Country'}
           </Text>
           <View style={styles.countryGrid}>
             {countries?.map(country => (
@@ -202,7 +244,7 @@ const LanguageSrc = (props: Props) => {
                     : 'Noto-Kufi-Arabic',
               },
             ]}>
-            {selectLanguage === 'ar' ? 'اختر اللغة' : 'Select Language'}
+            {isRTL ? 'اختر اللغة' : 'Select Language'}
           </Text>
           <View style={styles.countryGrid}>
             {language &&
@@ -245,7 +287,7 @@ const LanguageSrc = (props: Props) => {
           ]}>
           <Animated.View>
             <Btn
-              text={selectLanguage === 'ar' ? 'اكتمل' : 'Complete'}
+              text={isRTL ? 'تحديث' : 'Update'}
               onPress={() => {
                 usePostHandler();
               }}
@@ -253,11 +295,11 @@ const LanguageSrc = (props: Props) => {
           </Animated.View>
         </View>
       </View>
-    </ImageBackground>
+    </View>
   );
 };
 
-export default LanguageSrc;
+export default UpdateLanguageSrc;
 
 const styles = StyleSheet.create({
   appLogo: {
@@ -334,5 +376,23 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '500',
     fontSize: 18,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: hp(0.1),
+    paddingBottom: hp(0.3),
+  },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    display: 'flex',
+    gap: 4,
+  },
+  backText: {
+    color: 'white',
+    marginLeft: 8,
+    fontSize: 16,
   },
 });

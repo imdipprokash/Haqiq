@@ -18,22 +18,18 @@ import {
 } from '../constants/constants';
 import i18n from '../../i18n';
 import {NewsItem} from '../types/types';
-import {BlurView} from '@react-native-community/blur';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import BackButton from './back-button';
-import {useNavigation} from '@react-navigation/native';
 
 const NewsCard = ({item}: {item: NewsItem}) => {
-  const nav = useNavigation<any>();
-
   return (
     <Animated.View style={[styles.card]}>
       <StatusBar translucent backgroundColor={'transparent'} />
 
-      <BackButton onPress={() => nav.navigate('CategorySrc')} />
+      <BackButton pathName={'CategorySrc'} />
       <View style={styles.slideContainer}>
         <Image source={{uri: item.image}} style={styles.image} />
         <View
@@ -136,13 +132,13 @@ const styles = StyleSheet.create({
     height: hp(40),
   },
   title: {
-    fontSize: wp(5),
+    fontSize: wp(4.7),
     color: '#fff',
     marginBottom: hp(1.3),
   },
   description: {
     paddingVertical: 1,
-    fontSize: wp(3.9),
+    fontSize: wp(3.7),
     color: '#fff',
     lineHeight: hp(3),
     letterSpacing: 0.8,

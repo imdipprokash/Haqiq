@@ -1,18 +1,10 @@
-import {
-  Dimensions,
-  FlatList,
-  I18nManager,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 import {NewsItem, AdItem} from '../../types/types';
 import useGetData from '../../hooks/useGetData';
 import NewsCard from '../../components/NewsCard';
 import {SCREEN_HEIGHT} from '../../constants/constants';
-import i18n from '../../../i18n';
 import {useAppSelector} from '../../redux/store';
 
 type Props = {};
@@ -45,6 +37,8 @@ const HomeSrc = (props: Props) => {
         showsVerticalScrollIndicator={false}
       />
     </View>
+
+    // <DeckSwiper />
   );
 };
 

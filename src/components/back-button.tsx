@@ -5,11 +5,13 @@ import {
 } from 'react-native-responsive-screen';
 import {useAppSelector} from '../redux/store';
 import {View} from 'react-native-reanimated/lib/typescript/Animated';
+import { useNavigation } from '@react-navigation/native';
 
-export default function BackButton({onPress}: {onPress: () => void}) {
+export default function BackButton({pathName}: {pathName:string}) {
   const {languageCode} = useAppSelector(s => s.auth);
+   const nav = useNavigation<any>();
   return (
-    <Pressable onPress={onPress} style={[styles.backButton]}>
+    <Pressable onPress={()=>nav.navigate(pathName)} style={[styles.backButton]}>
       <Image
         source={require('../../assets/images/BackIcon.png')}
         style={{

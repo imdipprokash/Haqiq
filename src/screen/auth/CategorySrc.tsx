@@ -22,41 +22,50 @@ import {REMOVE_AUTH} from '../../redux/slices/authInfo';
 // import {BlurView} from '@react-native-community/blur';
 import {Category, NewsItem} from '../../types/types';
 import useGetData from '../../hooks/useGetData';
+import BackButton from '../../components/back-button';
+import {useNavigation} from '@react-navigation/native';
 
 type Props = {};
 
 const CategorySrc = () => {
-  const [refresh, setRefresh] = useState(false);
-  const dispatch = useAppDispatch();
+  const nav = useNavigation<any>();
   const {languageCode} = useAppSelector(s => s.auth);
   const [categories, setCategories] = useState<Category[]>([]);
 
   const isRTL = languageCode === 'ar';
-
   const [loading, setLoading] = useState(false);
-
   const [input, setInput] = useState('');
-
   const [searchResult, setSearchResult] = useState<NewsItem[]>([]);
-
-  const [debouncedInput, setDebouncedInput] = useState('');
 
   const {response, getData} = useGetData({
     endPoint: '/categories',
   });
 
+  const {response: searchResultRes, getData: searchResultHandler} = useGetData({
+    endPoint: `/news?search=${input}`,
+  });
+  useEffect(() => {
+    if (searchResultRes?.data) setSearchResult(searchResultRes?.data);
+  }, [searchResultRes]);
+  useEffect(() => {
+    if (input.length > 3) {
+      searchResultHandler();
+    } else {
+      setSearchResult([]);
+    }
+  }, [input]);
+
   useEffect(() => {
     response?.data && setCategories(response?.data);
   }, [response]);
   useEffect(() => {
-    // dispatch(REMOVE_AUTH());
     getData();
     setInput('');
   }, []);
+
   return (
     <ImageBackground
       source={require('../../../assets/images/background.png')}
-      // resizeMode="cover"
       style={[
         {width: SCREEN_WIDTH, height: SCREEN_HEIGHT},
         {direction: languageCode === 'ar' ? 'rtl' : 'ltr'},
@@ -71,19 +80,45 @@ const CategorySrc = () => {
         <View style={styles.container}>
           <View style={[styles.header]}>
             <TouchableOpacity
-              // onPress={() => router.push("/auth")}
+              onPress={() => nav.navigate('HomeSrc')}
               style={[styles.backButton]}>
-              {/* <Ionicons
-              name={isRTL ? "arrow-forward" : "arrow-back"}
-              size={24}
-              color="white"
-            /> */}
-              <Text style={[styles.backText, isRTL && {textAlign: 'right'}]}>
+              <Image
+                source={require('../../../assets/images/BackIcon.png')}
+                style={{
+                  width: wp(5),
+                  height: hp(2),
+                  transform: [
+                    {rotate: languageCode === 'ar' ? '180deg' : '0deg'},
+                  ],
+                }}
+              />
+              <Text
+                style={[
+                  styles.backText,
+                  isRTL && {textAlign: 'right'},
+                  {
+                    fontFamily: !isRTL
+                      ? 'Product Sans Regular'
+                      : 'Noto-Kufi-Arabic',
+                  },
+                ]}>
                 {isRTL ? 'العودة إلى القائمة' : 'Back to Feeds'}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
-              {/* <Ionicons name="settings-sharp" size={26} color="white" /> */}
+            <TouchableOpacity
+              onPress={() => {
+                nav.navigate('UpdateLanguageSrc');
+              }}>
+              <Image
+                source={require('../../../assets/images/settings.png')}
+                style={{
+                  width: wp(5),
+                  height: hp(2.4),
+                  transform: [
+                    {rotate: languageCode === 'ar' ? '180deg' : '0deg'},
+                  ],
+                }}
+              />
             </TouchableOpacity>
           </View>
 
@@ -93,7 +128,15 @@ const CategorySrc = () => {
               // isRTL && {flexDirection: 'row-reverse'},
             ]}>
             <TextInput
-              style={[styles.searchInput, isRTL && {textAlign: 'right'}]}
+              style={[
+                styles.searchInput,
+                isRTL && {textAlign: 'right'},
+                {
+                  fontFamily: !isRTL
+                    ? 'Product Sans Regular'
+                    : 'Noto-Kufi-Arabic',
+                },
+              ]}
               value={input}
               onChangeText={setInput}
               placeholder={isRTL ? 'بحث' : 'Search'}
@@ -101,11 +144,28 @@ const CategorySrc = () => {
             />
             <TouchableOpacity style={styles.searchButton}>
               {/* <Ionicons name="search" size={18} color="white" /> */}
+              <Image
+                source={require('../../../assets/images/SearchIcon.png')}
+                style={{
+                  width: 12,
+                  height: 12,
+                  transform: [
+                    {rotate: languageCode === 'ar' ? '90deg' : '0deg'},
+                  ],
+                }}
+              />
             </TouchableOpacity>
           </View>
 
           {!searchResult.length && (
-            <Text style={[styles.title, isRTL && {textAlign: 'right'}]}>
+            <Text
+              style={[
+                styles.title,
+                isRTL && {textAlign: 'right'},
+                {
+                  fontFamily: !isRTL ? 'Product Sans Bold' : 'Noto-Kufi-Arabic',
+                },
+              ]}>
               {isRTL ? 'جميع الفئات' : 'All Categories'}
             </Text>
           )}
@@ -116,7 +176,15 @@ const CategorySrc = () => {
             </View>
           ) : searchResult.length ? (
             <>
-              <Text style={[styles.title]}>
+              <Text
+                style={[
+                  styles.title,
+                  {
+                    fontFamily: !isRTL
+                      ? 'Product Sans Regular'
+                      : 'Noto-Kufi-Arabic',
+                  },
+                ]}>
                 {isRTL ? 'نتائج البحث' : 'Search Results'}
               </Text>
               <ScrollView
@@ -145,18 +213,34 @@ const CategorySrc = () => {
                           borderCurve: 'continuous',
                         }}>
                         <ImageBackground
-                          source={{uri: result.image}}
-                          style={styles.ResultbackgroundImage}
+                          source={{uri: result?.image}}
+                          style={styles.ResultBackgroundImage}
                           imageStyle={styles.imageRounded}
                         />
                       </View>
                       <View style={{flex: 1}}>
-                        <Text style={[{color: 'white', fontSize: 16}]}>
+                        <Text
+                          style={[
+                            {
+                              color: 'white',
+                              fontSize: 16,
+                              fontFamily: !isRTL
+                                ? 'Product Sans Regular'
+                                : 'Noto-Kufi-Arabic',
+                            },
+                          ]}>
                           {result.title}
                         </Text>
                         <Text
                           style={[
-                            {color: 'white', fontSize: 16, marginTop: 10},
+                            {
+                              color: 'white',
+                              fontSize: 16,
+                              marginTop: 10,
+                              fontFamily: !isRTL
+                                ? 'Product Sans Regular'
+                                : 'Noto-Kufi-Arabic',
+                            },
                           ]}>
                           {/* {timeAgo(result.created_at)} */}
                         </Text>
@@ -186,6 +270,11 @@ const CategorySrc = () => {
                     style={[
                       styles.categoryTitle,
                       isRTL && {textAlign: 'right'},
+                      {
+                        fontFamily: !isRTL
+                          ? 'Product Sans Regular'
+                          : 'Noto-Kufi-Arabic',
+                      },
                     ]}>
                     {category.title}
                   </Text>
@@ -216,16 +305,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 'auto',
     marginBottom: 15,
-    padding: 10,
+    paddingHorizontal: 10,
     justifyContent: 'space-between',
     gap: 10,
     borderRadius: 12,
     backgroundColor: 'white',
+    height: hp(7),
   },
   backButton: {
     flexDirection: 'row',
     alignItems: 'center',
     display: 'flex',
+    gap: 4,
   },
   headerText: {
     fontSize: 18,
@@ -247,11 +338,12 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     paddingHorizontal: 6,
+    fontWeight: 400,
   },
   searchButton: {
     width: 35,
     height: 35,
-    backgroundColor: 'black',
+    backgroundColor: '#061D39',
     borderRadius: 22,
     justifyContent: 'center',
     alignItems: 'center',
@@ -289,7 +381,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
     color: 'white',
     marginHorizontal: 16,
     marginBottom: 4,
@@ -330,13 +421,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginBottom: 5,
   },
-  ResultbackgroundImage: {
-    width: 140,
+  ResultBackgroundImage: {
+    width: wp(32),
     flex: 1,
   },
   imageRounded: {
     borderRadius: 12,
     width: '100%',
-    height: 150,
+    height: hp(15),
   },
 });
