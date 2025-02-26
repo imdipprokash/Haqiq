@@ -22,7 +22,7 @@ export interface Translations {
 
 export interface TranslationContextType {
   translations: Translations;
-  direction: "ltr" | "rtl";
+  direction: 'ltr' | 'rtl';
 }
 
 export interface Country {
@@ -101,6 +101,14 @@ export interface ApiResponseCategory {
   current_result_count: number;
   total_pages: number;
   current_page: number;
+}
+
+interface source {
+  name: string;
+  description: string;
+  url: string;
+  enabled: boolean;
+  id: string;
 }
 
 export interface NewsItem {

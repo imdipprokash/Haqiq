@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  FlatList,
   Image,
   ImageBackground,
   SafeAreaView,
@@ -18,12 +19,11 @@ import {
 } from 'react-native-responsive-screen';
 import {SCREEN_HEIGHT, SCREEN_WIDTH, SIZES} from '../../constants/constants';
 import {useAppDispatch, useAppSelector} from '../../redux/store';
-import {REMOVE_AUTH} from '../../redux/slices/authInfo';
-// import {BlurView} from '@react-native-community/blur';
 import {Category, NewsItem} from '../../types/types';
 import useGetData from '../../hooks/useGetData';
-import BackButton from '../../components/back-button';
 import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
+import {Cat_List} from '../../constants/DUMMY';
 
 type Props = {};
 
@@ -45,6 +45,7 @@ const CategorySrc = () => {
     endPoint: `/news?search=${input}`,
   });
   useEffect(() => {
+    console.log(searchResultRes?.data);
     if (searchResultRes?.data) setSearchResult(searchResultRes?.data);
   }, [searchResultRes]);
   useEffect(() => {
@@ -62,12 +63,12 @@ const CategorySrc = () => {
     getData();
     setInput('');
   }, []);
-
+  console.log(searchResult);
   return (
     <ImageBackground
       source={require('../../../assets/images/background.png')}
       style={[
-        {width: SCREEN_WIDTH, height: SCREEN_HEIGHT},
+        {width: SCREEN_WIDTH, height: SCREEN_HEIGHT, backgroundColor: '#000'},
         {direction: languageCode === 'ar' ? 'rtl' : 'ltr'},
       ]}>
       <View
@@ -161,7 +162,6 @@ const CategorySrc = () => {
             <Text
               style={[
                 styles.title,
-                isRTL && {textAlign: 'right'},
                 {
                   fontFamily: !isRTL ? 'Product Sans Bold' : 'Noto-Kufi-Arabic',
                 },
@@ -187,100 +187,84 @@ const CategorySrc = () => {
                 ]}>
                 {isRTL ? 'نتائج البحث' : 'Search Results'}
               </Text>
-              <ScrollView
-                contentContainerStyle={[
-                  styles.searchContainerDiv,
-                  {direction: isRTL ? 'rtl' : 'ltr'},
-                ]}>
-                {searchResult.map(result => (
-                  <View key={result.id} style={[styles.searchContainer]}>
-                    <TouchableOpacity
-                      style={styles.searchContainer}
-                      // onPress={() => router.push("/auth")}
-                    >
-                      <View
-                        style={{
-                          marginBottom: 12,
-                          height: 150,
-                          borderRadius: 12,
-                          borderWidth: 1,
-                          borderStyle: 'solid',
-                          elevation: 1,
-                          shadowColor: '#000',
-                          shadowOffset: {width: 0, height: 1},
-                          shadowOpacity: 0.2,
-                          shadowRadius: 1.41,
-                          borderCurve: 'continuous',
-                        }}>
-                        <ImageBackground
-                          source={{uri: result?.image}}
-                          style={styles.ResultBackgroundImage}
-                          imageStyle={styles.imageRounded}
-                        />
-                      </View>
-                      <View style={{flex: 1}}>
-                        <Text
-                          style={[
-                            {
-                              color: 'white',
-                              fontSize: 16,
-                              fontFamily: !isRTL
-                                ? 'Product Sans Regular'
-                                : 'Noto-Kufi-Arabic',
-                            },
-                          ]}>
-                          {result.title}
-                        </Text>
-                        <Text
-                          style={[
-                            {
-                              color: 'white',
-                              fontSize: 16,
-                              marginTop: 10,
-                              fontFamily: !isRTL
-                                ? 'Product Sans Regular'
-                                : 'Noto-Kufi-Arabic',
-                            },
-                          ]}>
-                          {/* {timeAgo(result.created_at)} */}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                ))}
-              </ScrollView>
+
+              <FlatList
+                data={searchResult}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={item => item.id.toString()}
+                renderItem={result => (
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    key={result.item.id}
+                    style={styles.searchContainer}>
+                    <View>
+                      <Image
+                        source={{uri: result?.item?.image}}
+                        style={styles.ResultBackgroundImage}
+                        resizeMode="cover"
+                      />
+                    </View>
+                    <View style={{flex: 1}}>
+                      <Text
+                        style={[
+                          {
+                            color: 'white',
+                            fontSize: wp(4.3),
+                            fontFamily: !isRTL
+                              ? 'Product Sans Regular'
+                              : 'Noto-Kufi-Arabic',
+                          },
+                        ]}>
+                        {result.item.title}
+                      </Text>
+                      <Text
+                        style={[
+                          {
+                            color: 'white',
+                            fontSize: wp(4.3),
+                            marginVertical: hp(1),
+                            fontFamily: !isRTL
+                              ? 'Product Sans Regular'
+                              : 'Noto-Kufi-Arabic',
+                          },
+                        ]}>
+                        {moment(result.item.created_at).format('DD-MM-YY')}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
+              />
             </>
           ) : (
-            <ScrollView
-              contentContainerStyle={[
-                styles.categoriesContainer,
-                {flexDirection: isRTL ? 'row-reverse' : 'row'},
-              ]}>
-              {categories?.map(category => (
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={item => item.id.toString()}
+              data={categories}
+              contentContainerStyle={{marginHorizontal: hp(1)}}
+              numColumns={3}
+              renderItem={ele => (
                 <TouchableOpacity
-                  key={category.id}
-                  style={[styles.categoryCard, {}]}
-                  // onPress={() => router.push("/auth")}
-                >
+                  key={ele.item.id}
+                  style={[styles.categoryCard, {}]}>
                   <Image
-                    source={{uri: category.image}}
+                    source={{uri: ele.item.image}}
                     style={styles.backgroundImage}
                   />
                   <Text
                     style={[
                       styles.categoryTitle,
-                      isRTL && {textAlign: 'right'},
                       {
                         fontFamily: !isRTL
                           ? 'Product Sans Regular'
                           : 'Noto-Kufi-Arabic',
                       },
                     ]}>
-                    {category.title}
+                    {ele.item.title}
                   </Text>
                 </TouchableOpacity>
-              ))}
-            </ScrollView>
+              )}
+            />
           )}
         </View>
       </View>
@@ -412,8 +396,11 @@ const styles = StyleSheet.create({
   searchContainer: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     gap: 20,
+    marginHorizontal: wp(3.5),
+    marginVertical: hp(1),
+    justifyContent: 'center',
   },
   backgroundImage: {
     width: '100%',
@@ -424,6 +411,8 @@ const styles = StyleSheet.create({
   ResultBackgroundImage: {
     width: wp(32),
     flex: 1,
+    height: hp(11.5),
+    borderRadius: wp(4),
   },
   imageRounded: {
     borderRadius: 12,

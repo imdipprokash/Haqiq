@@ -21,7 +21,7 @@ import {
 } from '../../constants/constants';
 import {Country, Language} from '../../types/types';
 import useGetData from '../../hooks/useGetData';
-import useAxios from '../../hooks/useAxios';
+import useAxios from '../../hooks/usePost';
 import {useAppDispatch, useAppSelector} from '../../redux/store';
 import {ADD_AUTH} from '../../redux/slices/authInfo';
 import {useNavigation} from '@react-navigation/native';
@@ -96,7 +96,6 @@ const UpdateLanguageSrc = (props: Props) => {
       //   countryList?.data && setSelectCountry(countryList?.data[0]?.code);
     }
     if (languageList) {
-      console.log(`/countries/${selectedCountry}/languages`, languageList);
       setLanguages(languageList);
     }
   }, [countryList, languageList]);

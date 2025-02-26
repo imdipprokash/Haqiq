@@ -21,7 +21,7 @@ import {
 } from '../../constants/constants';
 import {Country, Language} from '../../types/types';
 import useGetData from '../../hooks/useGetData';
-import useAxios from '../../hooks/useAxios';
+import useAxios from '../../hooks/usePost';
 import {useAppDispatch, useAppSelector} from '../../redux/store';
 import {ADD_AUTH, AuthType} from '../../redux/slices/authInfo';
 
@@ -81,16 +81,18 @@ const LanguageSrc = (props: Props) => {
   useEffect(() => {
     if (!countryListLoading) {
       setCountries(countryList?.data);
+
       //   countryList?.data && setSelectCountry(countryList?.data[0]?.code);
     }
     if (languageList) {
       console.log(`/countries/${selectedCountry}/languages`, languageList);
       setLanguages(languageList);
+      languageList[0]?.code && setSelectedLanguages(languageList[0]?.code);
     }
   }, [countryList, languageList]);
 
   useEffect(() => {
-    if (authRes) {
+    if (authRes?.access_token) {
       dispatch(
         ADD_AUTH({
           accessToken: authRes?.access_token,

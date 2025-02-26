@@ -8,6 +8,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {RootSiblingParent} from 'react-native-root-siblings';
 import 'react-native-reanimated';
 import Route from './Route';
+import './gesture-handler';
 
 export default function App() {
   return (

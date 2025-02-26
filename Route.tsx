@@ -1,6 +1,5 @@
 import {I18nManager, StyleSheet} from 'react-native';
 import React, {useEffect} from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LandingSrc from './src/screen/no-auth/LandingSrc';
 import LanguageSrc from './src/screen/no-auth/LanguageSrc';
 import {useAppSelector} from './src/redux/store';
@@ -8,7 +7,9 @@ import HomeSrc from './src/screen/auth/HomeSrc';
 import CategorySrc from './src/screen/auth/CategorySrc';
 import UpdateLanguageSrc from './src/screen/auth/UpdateLanguageSrc';
 
-const Stack = createNativeStackNavigator();
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
 const Route = () => {
   const {accessToken, languageCode} = useAppSelector(s => s.auth);
 
@@ -21,10 +22,20 @@ const Route = () => {
     }
   }, [I18nManager]);
 
-  console.log(accessToken, 'Token==>');
-
   return accessToken ? (
-    <Stack.Navigator initialRouteName="HomeSrc">
+    <Stack.Navigator
+      initialRouteName="HomeSrc"
+      screenOptions={
+        languageCode !== 'ar'
+          ? {
+              headerShown: false,
+              ...TransitionPresets.SlideFromLeftIOS,
+            }
+          : {
+              headerShown: false,
+              ...TransitionPresets.SlideFromRightIOS,
+            }
+      }>
       <Stack.Screen
         name="HomeSrc"
         component={HomeSrc}

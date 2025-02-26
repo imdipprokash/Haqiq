@@ -5,13 +5,12 @@ import {useAppSelector} from '../redux/store';
 
 type Props = {data: any; endPoint: string; method?: 'post' | 'put'};
 
-const useAxios = ({data, endPoint, method}: Props) => {
+const usePost = ({data, endPoint, method}: Props) => {
   const {accessToken} = useAppSelector(s => s.auth);
   const [response, setResponse] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  
   const usePostHandler = () => {
     setLoading(true);
     let config = {
@@ -39,4 +38,4 @@ const useAxios = ({data, endPoint, method}: Props) => {
   return {response, loading, error, usePostHandler};
 };
 
-export default useAxios;
+export default usePost;
