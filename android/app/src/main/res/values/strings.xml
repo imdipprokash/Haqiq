@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Haqiq</string>
+    <color name="yourBackgroundColor">#000</color> 
 </resources>
