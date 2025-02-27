@@ -9,15 +9,26 @@ import {RootSiblingParent} from 'react-native-root-siblings';
 import 'react-native-reanimated';
 import Route from './Route';
 import './gesture-handler';
+import LottieView from 'lottie-react-native';
+import FlashSrc from './src/screen/FlashSrc';
 
 export default function App() {
+  const [showFlashScreen, setShowFlashScreen] = React.useState(true);
   return (
     <Provider store={store}>
       <GestureHandlerRootView>
         <RootSiblingParent>
           <PersistGate loading={null} persistor={persistor}>
             <NavigationContainer>
-              <Route />
+              {showFlashScreen ? (
+                <FlashSrc
+                  setShowFlashScreen={() => {
+                    setShowFlashScreen(!showFlashScreen);
+                  }}
+                />
+              ) : (
+                <Route />
+              )}
             </NavigationContainer>
           </PersistGate>
         </RootSiblingParent>

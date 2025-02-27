@@ -84,18 +84,20 @@ const LanguageSrc = (props: Props) => {
 
       //   countryList?.data && setSelectCountry(countryList?.data[0]?.code);
     }
+  }, [countryList]);
+  useEffect(() => {
     if (languageList) {
       console.log(`/countries/${selectedCountry}/languages`, languageList);
       setLanguages(languageList);
       languageList[0]?.code && setSelectedLanguages(languageList[0]?.code);
     }
-  }, [countryList, languageList]);
+  }, [languageList]);
 
   useEffect(() => {
     if (authRes?.access_token) {
       dispatch(
         ADD_AUTH({
-          accessToken: authRes?.access_token,
+          accessToken: authRes?.access_token || '',
           refreshToken: authRes?.refresh_token,
           countryCode: selectedCountry || 'SA',
           languageCode: selectLanguage || 'ar',
@@ -111,7 +113,6 @@ const LanguageSrc = (props: Props) => {
 
   useEffect(() => {
     getData();
-    // Create an infinite fade-in, fade-out loop
     Animated.loop(
       Animated.sequence([
         Animated.timing(logoOpacity, {

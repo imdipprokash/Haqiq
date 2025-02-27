@@ -18,7 +18,7 @@ const usePost = ({data, endPoint, method}: Props) => {
       maxBodyLength: Infinity,
       url: `${BASE_URL}${endPoint}`,
       headers: {
-        Authorization: accessToken,
+        accesstoken: `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
       },
       data: data,

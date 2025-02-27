@@ -93,10 +93,10 @@ const UpdateLanguageSrc = (props: Props) => {
   useEffect(() => {
     if (!countryListLoading) {
       setCountries(countryList?.data);
-      //   countryList?.data && setSelectCountry(countryList?.data[0]?.code);
     }
     if (languageList) {
       setLanguages(languageList);
+      languageList[0]?.code && setSelectedLanguages(languageList[0]?.code);
     }
   }, [countryList, languageList]);
 

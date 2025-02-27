@@ -1,7 +1,6 @@
 import {
   Animated,
   Dimensions,
-  Image,
   ImageBackground,
   Pressable,
   StatusBar,
@@ -10,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import FastImage from '@d11/react-native-fast-image';
 import React from 'react';
 import {
   Colors,
@@ -25,17 +25,20 @@ import {
 
 const AdsCard = ({item}: {item: AdItem}) => {
   return (
-    <ImageBackground
-      source={{uri: item?.image}}
-      style={{width: SCREEN_WIDTH, height: SCREEN_HEIGHT}}
-      resizeMode="cover">
+    <FastImage
+      source={{
+        uri: item?.image,
+        priority: FastImage.priority.high,
+      }}
+      resizeMode={FastImage.resizeMode.cover}
+      style={{width: SCREEN_WIDTH, height: SCREEN_HEIGHT}}>
       <StatusBar translucent backgroundColor={'transparent'} />
 
       <View style={styles.bottomContent}>
         <TouchableOpacity
           activeOpacity={0.7}
           style={{
-            backgroundColor: item.theme.background_color || '#fff',
+            backgroundColor: item?.theme?.background_color || '#fff',
             paddingHorizontal: 70,
             paddingVertical: 20,
             borderRadius: 50,
@@ -45,7 +48,7 @@ const AdsCard = ({item}: {item: AdItem}) => {
 
         <Text style={styles.swipeText}>Swipe up for next</Text>
       </View>
-    </ImageBackground>
+    </FastImage>
   );
 };
 

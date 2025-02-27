@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import {useAppDispatch, useAppSelector} from '../redux/store';
 import {BASE_URL} from '../constants/constants';
-import {ADD_AUTH} from '../redux/slices/authInfo';
+import {ADD_AUTH, REMOVE_AUTH} from '../redux/slices/authInfo';
 
 type Props = {endPoint: string; method?: 'get' | 'delete'};
 
@@ -20,6 +20,7 @@ const useGetData = ({endPoint, method}: Props) => {
     setLoading(true);
     let config = {
       method: 'get',
+      maxBodyLength: Infinity,
       url: `${BASE_URL}${endPoint}`,
       headers: {
         accesstoken: `Bearer ${accessToken}`,
@@ -29,25 +30,26 @@ const useGetData = ({endPoint, method}: Props) => {
     axios
       .request(config)
       .then(response => {
-        setResponse(response.data);
+        setResponse(response?.data);
         setLoading(false);
       })
       .catch((error: any) => {
-        if (error?.response?.status === 401) UpdateAccessToken();
-        setError(error);
-        setLoading(false);
+        if (error?.response?.status === 401) {
+          UpdateAccessToken();
+        } else {
+          setError(error);
+          setLoading(false);
+        }
       });
   };
 
   const UpdateAccessToken = () => {
-    // /auth/device/token/refresh
-
     let config = {
       method: method || 'post',
       maxBodyLength: Infinity,
       url: `${BASE_URL}/auth/device/token/refresh`,
       headers: {
-        Authorization: accessToken,
+        accesstoken: `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
       },
       data: {
@@ -57,7 +59,7 @@ const useGetData = ({endPoint, method}: Props) => {
     axios
       .request(config)
       .then(response => {
-        const authRes = response?.data?.access_token;
+        const authRes = response?.data;
         dispatch(
           ADD_AUTH({
             accessToken: authRes.access_token,
@@ -70,6 +72,7 @@ const useGetData = ({endPoint, method}: Props) => {
         getData();
       })
       .catch(error => {
+        dispatch(REMOVE_AUTH());
         setError(error);
       });
   };

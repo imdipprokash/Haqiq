@@ -1,18 +1,11 @@
-import {
-  FlatList,
-  ImageBackground,
-  StyleSheet,
-  View,
-  ViewToken,
-} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
-import Animated from 'react-native-reanimated';
 import {NewsItem, AdItem} from '../../types/types';
 import useGetData from '../../hooks/useGetData';
 import NewsCard from '../../components/NewsCard';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/constants';
 import {useAppSelector} from '../../redux/store';
-import useAxios from '../../hooks/usePost';
+
 import usePost from '../../hooks/usePost';
 import moment from 'moment';
 import AdsCard from '../../components/AdsCard';
@@ -21,48 +14,69 @@ type Props = {};
 
 const HomeSrc = (props: Props) => {
   const [news, setNews] = useState<NewsItem[]>([]);
-  const [combine, setCombine] = useState<any>([]);
+  const [combine, setCombine] = useState<any[]>([]);
+  const [pageInfo, serPageInfo] = useState(1);
   const [currentItem, setCurrentItem] = useState<any>();
-  const {languageCode} = useAppSelector(s => s.auth);
+  const {languageCode, countryCode} = useAppSelector(s => s.auth);
   const {response: NewsList, getData: getNewsList} = useGetData({
-    endPoint: '/news',
+    endPoint: `/news/?country_code=${countryCode}&language_code=${languageCode}&page_size=${5}&page_number=${pageInfo}&enabled_status=enabled`,
   });
 
   const {response: AdsList, getData: getAdsList} = useGetData({
-    endPoint: '/ads',
+    endPoint: `/ads/?country_code=${countryCode}&language_code=${languageCode}&page_size=${1}&page_number=${pageInfo}&enabled_status=enabled`,
   });
   const {response, usePostHandler} = usePost({
     endPoint: '/impressions',
     data: {
       content_id: currentItem?.content_type,
       content_type: currentItem?.id,
-      action: 'scroll',
+      action: 'swipe',
       timestamp: moment(),
       duration: 0,
     },
   });
+
+  console.log(response);
+
   useEffect(() => {
-    if (NewsList?.data) {
-      if (AdsList?.data) {
-        setCombine((prev: any) => [
-          ...prev,
-          ...NewsList?.data,
-          AdsList?.data[0],
-        ]);
-      } else {
-        setCombine((prev: any) => [...prev, ...NewsList?.data]);
-      }
-      // setCombine(AdsList?.data);
-      // setNews(NewsList?.data);
+    getAdsList();
+    getNewsList();
+  }, [pageInfo]);
+
+  useEffect(() => {
+    if (NewsList?.data && AdsList?.data) {
+      setCombine((prev: any) => {
+        const existingIds = new Set(prev.map((item: any) => item.id)); // Track existing items
+        const newCombinedArray: any[] = [...prev]; // Preserve old data
+
+        const newsData = NewsList.data.filter(
+          (item: any) => !existingIds.has(item.id),
+        );
+        const adsData = AdsList.data.filter(
+          (item: any) => !existingIds.has(item.id),
+        );
+
+        let newsIndex = 0;
+        let adsIndex = 0;
+
+        while (newsIndex < newsData.length || adsIndex < adsData.length) {
+          if (newsIndex < newsData.length) {
+            newCombinedArray.push(...newsData.slice(newsIndex, newsIndex + 5));
+            newsIndex += 5;
+          }
+          if (adsIndex < adsData.length) {
+            newCombinedArray.push(adsData[adsIndex]);
+            adsIndex++;
+          }
+        }
+
+        return newCombinedArray;
+      });
     }
   }, [NewsList, AdsList]);
 
   useEffect(() => {
-    getNewsList();
-    getAdsList();
-  }, []);
-
-  useEffect(() => {
+    console.log(currentItem?.id);
     if (currentItem?.id) {
       usePostHandler();
     }
@@ -73,7 +87,6 @@ const HomeSrc = (props: Props) => {
       setCurrentItem(viewableItems[0].item);
     }
   });
-
   const viewConfigRef = useRef({viewAreaCoveragePercentThreshold: 50});
   return (
     <View style={{flex: 1, backgroundColor: '#000'}}>
@@ -96,7 +109,7 @@ const HomeSrc = (props: Props) => {
         viewabilityConfig={viewConfigRef.current}
         onEndReachedThreshold={2}
         onEndReached={() => {
-          console.log('FlatList');
+          serPageInfo(prev => prev + 1);
         }}
       />
     </View>
