@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
-import {t} from 'i18next';
+import DeviceInfo from 'react-native-device-info';
 import i18n from '../../../i18n';
 import Btn from '../../components/btn';
 import {
@@ -95,15 +95,17 @@ const LanguageSrc = (props: Props) => {
 
   useEffect(() => {
     if (authRes?.access_token) {
-      dispatch(
-        ADD_AUTH({
-          accessToken: authRes?.access_token || '',
-          refreshToken: authRes?.refresh_token,
-          countryCode: selectedCountry || 'SA',
-          languageCode: selectLanguage || 'ar',
-          deviceId: '',
-        }),
-      );
+      DeviceInfo.getAndroidId().then(androidId => {
+        dispatch(
+          ADD_AUTH({
+            accessToken: authRes?.access_token || '',
+            refreshToken: authRes?.refresh_token,
+            countryCode: selectedCountry || 'SA',
+            languageCode: selectLanguage || 'ar',
+            deviceId: androidId || '',
+          }),
+        );
+      });
     }
   }, [authRes]);
 

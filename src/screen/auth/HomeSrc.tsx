@@ -36,15 +36,13 @@ const HomeSrc = (props: Props) => {
     },
   });
 
-  console.log(response);
-
   useEffect(() => {
     getAdsList();
     getNewsList();
   }, [pageInfo]);
 
   useEffect(() => {
-    if (NewsList?.data && AdsList?.data) {
+    if (NewsList?.data) {
       setCombine((prev: any) => {
         const existingIds = new Set(prev.map((item: any) => item.id)); // Track existing items
         const newCombinedArray: any[] = [...prev]; // Preserve old data
@@ -52,21 +50,14 @@ const HomeSrc = (props: Props) => {
         const newsData = NewsList.data.filter(
           (item: any) => !existingIds.has(item.id),
         );
-        const adsData = AdsList.data.filter(
-          (item: any) => !existingIds.has(item.id),
-        );
 
         let newsIndex = 0;
         let adsIndex = 0;
 
-        while (newsIndex < newsData.length || adsIndex < adsData.length) {
+        while (newsIndex < newsData.length) {
           if (newsIndex < newsData.length) {
             newCombinedArray.push(...newsData.slice(newsIndex, newsIndex + 5));
             newsIndex += 5;
-          }
-          if (adsIndex < adsData.length) {
-            newCombinedArray.push(adsData[adsIndex]);
-            adsIndex++;
           }
         }
 
