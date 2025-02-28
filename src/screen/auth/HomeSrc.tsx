@@ -50,14 +50,9 @@ const HomeSrc = (props: Props) => {
           (item: any) => !existingIds.has(item.id),
         );
 
-        let newsIndex = 0;
-        while (newsIndex < newsData.length) {
-          if (newsIndex < newsData.length) {
-            newCombinedArray.push(...newsData.slice(newsIndex, newsIndex + 5));
-            newsIndex += 5;
-          }
-        }
+        newCombinedArray.push(...newsData);
         return newCombinedArray;
+        // return [...prev, ...NewsList?.data];
       });
     }
   }, [NewsList, AdsList]);

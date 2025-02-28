@@ -1,4 +1,4 @@
-package com.haqiq
+package co.haqiq
 
 import android.app.Application
 import com.facebook.react.PackageList
