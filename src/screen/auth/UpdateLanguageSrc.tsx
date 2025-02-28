@@ -35,7 +35,7 @@ type Props = {};
 const UpdateLanguageSrc = (props: Props) => {
   const dispatch = useAppDispatch();
   const nav = useNavigation<any>();
-  const {countryCode, languageCode} = useAppSelector(s => s.auth);
+  const {countryCode, languageCode, deviceId} = useAppSelector(s => s.auth);
   const logoOpacity = useRef(new Animated.Value(0)).current;
   const [language, setLanguage] = useState(i18n.language || 'en');
   const [countries, setCountries] = useState<Country[]>([]);
@@ -108,7 +108,7 @@ const UpdateLanguageSrc = (props: Props) => {
           refreshToken: authRes?.refresh_token,
           countryCode: selectedCountry || 'SA',
           languageCode: selectLanguage || 'ar',
-          deviceId: '',
+          deviceId: deviceId,
         }),
       );
 

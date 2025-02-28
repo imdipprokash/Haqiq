@@ -9,11 +9,14 @@ import {RootSiblingParent} from 'react-native-root-siblings';
 import 'react-native-reanimated';
 import Route from './Route';
 import './gesture-handler';
-import LottieView from 'lottie-react-native';
 import FlashSrc from './src/screen/FlashSrc';
 
 export default function App() {
   const [showFlashScreen, setShowFlashScreen] = React.useState(true);
+
+  setTimeout(() => {
+    setShowFlashScreen(false);
+  }, 1800);
   return (
     <Provider store={store}>
       <GestureHandlerRootView>
