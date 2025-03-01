@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* HaqiqTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* HaqiqTests.m */; };
 		0C80B921A6F3F58F76C31292 /* libPods-Haqiq.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-Haqiq.a */; };
+		137E85D82D7344B700DFD180 /* GoogleService-Info 2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 137E85D72D7344B700DFD180 /* GoogleService-Info 2.plist */; };
+		137E85D92D7344B700DFD180 /* GoogleService-Info 2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 137E85D72D7344B700DFD180 /* GoogleService-Info 2.plist */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -41,6 +43,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* HaqiqTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HaqiqTests.m; sourceTree = "<group>"; };
 		04D197E43769440092F30A7F /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
+		137E85D72D7344B700DFD180 /* GoogleService-Info 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info 2.plist"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Haqiq.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Haqiq.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Haqiq/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Haqiq/AppDelegate.mm; sourceTree = "<group>"; };
@@ -153,6 +156,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				137E85D72D7344B700DFD180 /* GoogleService-Info 2.plist */,
 				13B07FAE1A68108700A75B9A /* Haqiq */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* HaqiqTests */,
@@ -272,6 +276,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				137E85D92D7344B700DFD180 /* GoogleService-Info 2.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +290,7 @@
 				E83451536B1647459200513E /* Poppins-Bold.ttf in Resources */,
 				37A214242D724E75B61F05DC /* Poppins-ExtraBold.ttf in Resources */,
 				4C2002E560124FBEBA391D8B /* Poppins-Light.ttf in Resources */,
+				137E85D82D7344B700DFD180 /* GoogleService-Info 2.plist in Resources */,
 				ECADB49209844A0CAEDBF5E7 /* Poppins-Medium.ttf in Resources */,
 				5172730502C04C2687D45493 /* Poppins-Regular.ttf in Resources */,
 				ED81017A9A0545A291A1BADA /* Poppins-SemiBold.ttf in Resources */,
@@ -527,7 +533,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = co.haqiq;
 				PRODUCT_NAME = Haqiq;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -554,7 +560,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = co.haqiq;
 				PRODUCT_NAME = Haqiq;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
