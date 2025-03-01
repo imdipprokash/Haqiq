@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
   image: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
+    backgroundColor: '#000',
   },
   taglineHighlight: {
     color: '#fff',

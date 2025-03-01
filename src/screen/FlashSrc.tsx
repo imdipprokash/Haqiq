@@ -22,6 +22,7 @@ const FlashSrc = ({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#000',
       }}>
       <StatusBar translucent backgroundColor={'transparent'} />
       <LottieView
