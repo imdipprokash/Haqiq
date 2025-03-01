@@ -2,6 +2,7 @@ import {
   Animated,
   ImageBackground,
   Linking,
+  Platform,
   Pressable,
   StatusBar,
   StyleSheet,
@@ -67,10 +68,7 @@ const LandingSrc = (props: Props) => {
               styles.taglineHighlight,
               {
                 fontSize: i18n.language === 'en' ? wp(7) : 25,
-                fontFamily:
-                  i18n.language === 'en'
-                    ? 'Product Sans Bold'
-                    : 'Noto-Kufi-Arabic',
+                fontFamily: 'Product Sans Bold',
               },
             ]}>
             {t('landingSrc.onboarding_heading_1')}
@@ -80,10 +78,7 @@ const LandingSrc = (props: Props) => {
               styles.taglineHighlight,
               {
                 fontSize: i18n.language === 'en' ? wp(7) : 25,
-                fontFamily:
-                  i18n.language === 'en'
-                    ? 'Product Sans Bold'
-                    : 'Noto-Kufi-Arabic',
+                fontFamily: 'Product Sans Bold',
               },
             ]}>
             {t('landingSrc.onboarding_heading_2')}
@@ -107,10 +102,7 @@ const LandingSrc = (props: Props) => {
               style={[
                 styles.termsText,
                 {
-                  fontFamily:
-                    i18n.language === 'en'
-                      ? 'Product Sans Regular'
-                      : 'Noto-Kufi-Arabic',
+                  fontFamily: 'Product Sans Bold',
                   fontSize: i18n.language === 'en' ? wp(3.5) : 13,
                 },
               ]}>
@@ -124,10 +116,7 @@ const LandingSrc = (props: Props) => {
                 style={[
                   styles.termsText,
                   {
-                    fontFamily:
-                      i18n.language === 'en'
-                        ? 'Product Sans Regular'
-                        : 'Noto-Kufi-Arabic',
+                    fontFamily: 'Product Sans Bold',
                     fontSize: i18n.language === 'en' ? wp(3.5) : 13,
                     borderBottomColor: 'white',
                     textDecorationLine: 'underline',

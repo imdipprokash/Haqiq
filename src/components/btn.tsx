@@ -1,8 +1,9 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Platform, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {normalize, TEXT_SIZE} from '../constants/constants';
 import {useTranslation} from 'react-i18next';
 import {useAppSelector} from '../redux/store';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
 
 type Props = {
   text: string;
@@ -18,13 +19,12 @@ const Btn = ({text, onPress}: Props) => {
         style={[
           styles.textStyle,
           {
-            fontSize: languageCode === 'en' ? 22 : 20,
-            fontWeight: languageCode === 'en' ? 400 : 600,
-            fontFamily:
-              languageCode === 'en'
-                ? 'Product Sans Regular'
-                : 'Noto-Kufi-Arabic',
-            paddingVertical: languageCode === 'en' ? 20 : 10,
+            fontSize: 22,
+            fontFamily: 'Product Sans Regular',
+            paddingVertical:
+              Platform.OS === 'ios'
+                ? heightPercentageToDP(2.1)
+                : heightPercentageToDP(2),
           },
         ]}>
         {text}

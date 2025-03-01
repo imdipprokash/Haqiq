@@ -3,8 +3,6 @@ import {
   FlatList,
   Image,
   ImageBackground,
-  SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -18,12 +16,11 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {SCREEN_HEIGHT, SCREEN_WIDTH, SIZES} from '../../constants/constants';
-import {useAppDispatch, useAppSelector} from '../../redux/store';
+import {useAppSelector} from '../../redux/store';
 import {Category, NewsItem} from '../../types/types';
 import useGetData from '../../hooks/useGetData';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
-import {Cat_List} from '../../constants/DUMMY';
 
 type Props = {};
 
@@ -194,6 +191,9 @@ const CategorySrc = () => {
                 keyExtractor={item => item.id.toString()}
                 renderItem={result => (
                   <TouchableOpacity
+                    onPress={() => {
+                      nav.navigate('HomeSrc', {SearchNews: searchResult});
+                    }}
                     activeOpacity={0.7}
                     key={result.item.id}
                     style={styles.searchContainer}>
@@ -245,6 +245,10 @@ const CategorySrc = () => {
               numColumns={3}
               renderItem={ele => (
                 <TouchableOpacity
+                  onPress={() => {
+                    nav.navigate('HomeSrc', {item: ele.item?.id});
+                    console.log('', ele.item?.id);
+                  }}
                   key={ele.item.id}
                   style={[styles.categoryCard, {}]}>
                   <Image

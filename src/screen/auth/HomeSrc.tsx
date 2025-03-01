@@ -7,17 +7,27 @@ import {useAppSelector} from '../../redux/store';
 import usePost from '../../hooks/usePost';
 import moment from 'moment';
 import AdsCard from '../../components/AdsCard';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 type Props = {};
 
-const HomeSrc = (props: Props) => {
-  const [combine, setCombine] = useState<any[]>([]);
+const HomeSrc = ({route}: any) => {
+  const item = route.params;
+
+  const [combine, setCombine] = useState<any[]>(
+    item?.SearchNews ? item?.SearchNews : [],
+  );
   const [pageInfo, serPageInfo] = useState(1);
   const [currentItem, setCurrentItem] = useState<any>();
   const {languageCode, countryCode} = useAppSelector(s => s.auth);
   const {response: NewsList, getData: getNewsList} = useGetData({
-    endPoint: `/news/?country_code=${countryCode}&language_code=${languageCode}&page_size=${5}&page_number=${pageInfo}&enabled_status=enabled`,
+    endPoint: item?.SearchNews
+      ? ''
+      : item?.item
+      ? `/categories/${
+          item?.item
+        }/news?country_code=${countryCode}&language_code=${languageCode}&page_size=${5}&page_number=${pageInfo}&enabled_status=enabled`
+      : `/news/?country_code=${countryCode}&language_code=${languageCode}&page_size=${5}&page_number=${pageInfo}&enabled_status=enabled`,
   });
 
   const {response: AdsList, getData: getAdsList} = useGetData({
@@ -85,7 +95,7 @@ const HomeSrc = (props: Props) => {
           viewabilityConfig={viewConfigRef.current}
           onEndReachedThreshold={2}
           onScrollEndDrag={() => {
-            usePostHandler();
+            if (!item) usePostHandler();
           }}
           onEndReached={() => {
             serPageInfo(prev => prev + 1);

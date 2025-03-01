@@ -29,6 +29,7 @@ type Props = {};
 
 const LanguageSrc = (props: Props) => {
   const logoOpacity = useRef(new Animated.Value(0)).current;
+  const [deviceId, setDeviceId] = useState('');
   const [language, setLanguage] = useState(i18n.language || 'en');
   const [countries, setCountries] = useState<Country[]>([]);
   const [selectedCountry, setSelectCountry] = useState<string>();
@@ -81,8 +82,6 @@ const LanguageSrc = (props: Props) => {
   useEffect(() => {
     if (!countryListLoading) {
       setCountries(countryList?.data);
-
-      //   countryList?.data && setSelectCountry(countryList?.data[0]?.code);
     }
   }, [countryList]);
   useEffect(() => {
@@ -95,17 +94,15 @@ const LanguageSrc = (props: Props) => {
 
   useEffect(() => {
     if (authRes?.access_token) {
-      DeviceInfo.getAndroidId().then(androidId => {
-        dispatch(
-          ADD_AUTH({
-            accessToken: authRes?.access_token || '',
-            refreshToken: authRes?.refresh_token,
-            countryCode: selectedCountry || 'SA',
-            languageCode: selectLanguage || 'ar',
-            deviceId: androidId || '',
-          }),
-        );
-      });
+      dispatch(
+        ADD_AUTH({
+          accessToken: authRes?.access_token || '',
+          refreshToken: authRes?.refresh_token,
+          countryCode: selectedCountry || 'SA',
+          languageCode: selectLanguage || 'ar',
+          deviceId: deviceId || '',
+        }),
+      );
     }
   }, [authRes]);
 
@@ -115,6 +112,11 @@ const LanguageSrc = (props: Props) => {
 
   useEffect(() => {
     getData();
+
+    DeviceInfo.getMacAddress().then(mac => {
+      setDeviceId(mac);
+    });
+
     Animated.loop(
       Animated.sequence([
         Animated.timing(logoOpacity, {
@@ -252,6 +254,7 @@ const LanguageSrc = (props: Props) => {
             <Btn
               text={selectLanguage === 'ar' ? 'اكتمل' : 'Complete'}
               onPress={() => {
+                console.log('Btn Clicked');
                 usePostHandler();
               }}
             />
