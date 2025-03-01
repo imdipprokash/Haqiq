@@ -7,7 +7,8 @@ import {useAppSelector} from '../../redux/store';
 import usePost from '../../hooks/usePost';
 import moment from 'moment';
 import AdsCard from '../../components/AdsCard';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
+import notifee from '@notifee/react-native';
 
 type Props = {};
 
@@ -44,8 +45,15 @@ const HomeSrc = ({route}: any) => {
     },
   });
 
+  const HandlePermission = async () => {
+    const res = await notifee.requestPermission();
+
+    console.log(res);
+  };
+
   useFocusEffect(
     React.useCallback(() => {
+      HandlePermission();
       getNewsList();
       return () => {};
     }, [pageInfo]),

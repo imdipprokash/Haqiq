@@ -7,6 +7,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
+
+
 const FlashSrc = ({
   setShowFlashScreen,
 }: {

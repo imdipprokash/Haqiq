@@ -26,6 +26,7 @@ import {
 import BackButton from './back-button';
 import {InAppBrowser} from 'react-native-inappbrowser-reborn';
 import {timeAgo} from '../constants/timeAgo';
+import {onDisplayNotification} from '../helper/Notification';
 
 const NewsCard = ({item}: {item: NewsItem}) => {
   const sleep = (timeout: number) => {
@@ -124,7 +125,9 @@ const NewsCard = ({item}: {item: NewsItem}) => {
               }>
               {i18n.t('homePage.swipe_up')}
             </Text>
-            <Text style={[styles.button]}>{i18n.t('homePage.haqiq')}</Text>
+            <Pressable onPress={() => onDisplayNotification()}>
+              <Text style={[styles.button]}>{i18n.t('homePage.haqiq')}</Text>
+            </Pressable>
           </View>
           <View style={{overflow: 'hidden'}}>
             <ImageBackground
@@ -132,15 +135,9 @@ const NewsCard = ({item}: {item: NewsItem}) => {
               source={{uri: item.image}}
               style={styles.backgroundImage}>
               <View style={styles.overlay} />
-              {/* <BlurView
-                blurAmount={10}
-                style={styles.blurContainer}
-                overlayColor="transparent"
-              /> */}
 
               <Pressable
                 onPress={() => {
-                  // Linking.openURL();
                   openLink({url: item?.source_url});
                 }}>
                 <View style={[styles.sourceContainer]}>

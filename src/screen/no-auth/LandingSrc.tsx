@@ -10,12 +10,7 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useRef} from 'react';
-import {
-  normalize,
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-  SIZES,
-} from '../../constants/constants';
+import {SCREEN_HEIGHT, SCREEN_WIDTH, SIZES} from '../../constants/constants';
 import Btn from '../../components/btn';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
@@ -23,6 +18,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import notifee from '@notifee/react-native';
 
 type Props = {};
 
@@ -32,7 +28,12 @@ const LandingSrc = (props: Props) => {
 
   const logoOpacity = useRef(new Animated.Value(0)).current;
 
+  const HandlePermission = async () => {
+    await notifee.requestPermission();
+  };
+
   useEffect(() => {
+    HandlePermission();
     Animated.sequence([
       Animated.timing(logoOpacity, {
         toValue: 1,

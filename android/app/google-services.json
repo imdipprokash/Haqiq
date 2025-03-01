@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "832882275395",
+    "project_id": "haqiq-app",
+    "storage_bucket": "haqiq-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832882275395:android:4ea89507eff8382c2ad0f6",
+        "android_client_info": {
+          "package_name": "co.haqiq"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhENJhfLRP5ftzeILOatrSYGP73ufeLHk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
