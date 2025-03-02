@@ -39,7 +39,8 @@
     "react-native-screens": "^4.4.0",
     "react-native-super-ellipse-mask": "^1.0.7",
     "react-redux": "^9.2.0",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

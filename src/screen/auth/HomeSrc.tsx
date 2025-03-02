@@ -27,13 +27,10 @@ const HomeSrc = ({route}: any) => {
       : item?.item
       ? `/categories/${
           item?.item
-        }/news?country_code=${countryCode}&language_code=${languageCode}&page_size=${5}&page_number=${pageInfo}&enabled_status=enabled`
-      : `/news/?country_code=${countryCode}&language_code=${languageCode}&page_size=${5}&page_number=${pageInfo}&enabled_status=enabled`,
+        }/news?country_code=${countryCode}&language_code=${languageCode}&page_size=${10}&page_number=${pageInfo}&enabled_status=enabled`
+      : `/news/?country_code=${countryCode}&language_code=${languageCode}`,
   });
 
-  const {response: AdsList, getData: getAdsList} = useGetData({
-    endPoint: `/ads/?country_code=${countryCode}&language_code=${languageCode}&page_size=${1}&page_number=${pageInfo}&enabled_status=enabled`,
-  });
   const {response, usePostHandler} = usePost({
     endPoint: '/impressions',
     data: {
@@ -61,16 +58,12 @@ const HomeSrc = ({route}: any) => {
   useEffect(() => {
     if (NewsList?.data) {
       setCombine((prev: any) => {
-        const existingIds = new Set(prev.map((item: any) => item.id)); // Track existing items
         const newCombinedArray: any[] = [...prev]; // Preserve old data
-        const newsData = NewsList.data.filter(
-          (item: any) => !existingIds.has(item.id),
-        );
-        newCombinedArray.push(...newsData);
+        newCombinedArray.push(...NewsList?.data);
         return newCombinedArray;
       });
     }
-  }, [NewsList, AdsList]);
+  }, [NewsList]);
 
   const onViewRef = useRef(({viewableItems}: any) => {
     if (viewableItems.length > 0) {

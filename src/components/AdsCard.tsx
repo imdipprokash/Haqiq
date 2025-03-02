@@ -1,8 +1,4 @@
 import {
-  Animated,
-  Dimensions,
-  ImageBackground,
-  Pressable,
   StatusBar,
   StyleSheet,
   Text,
@@ -11,17 +7,13 @@ import {
 } from 'react-native';
 import FastImage from '@d11/react-native-fast-image';
 import React from 'react';
-import {
-  Colors,
-  layouts,
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-} from '../constants/constants';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../constants/constants';
 import {AdItem} from '../types/types';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {openLink} from '../helper/InAppBrowser';
 
 const AdsCard = ({item}: {item: AdItem}) => {
   return (
@@ -36,6 +28,10 @@ const AdsCard = ({item}: {item: AdItem}) => {
 
       <View style={styles.bottomContent}>
         <TouchableOpacity
+          onPress={() => {
+            console.log(item.ad_url);
+            item.ad_url && openLink({url: item.ad_url});
+          }}
           activeOpacity={0.7}
           style={{
             backgroundColor: item?.theme?.background_color || '#fff',
