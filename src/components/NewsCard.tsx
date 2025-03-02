@@ -125,7 +125,10 @@ const NewsCard = ({item}: {item: NewsItem}) => {
               }>
               {i18n.t('homePage.swipe_up')}
             </Text>
-            <Pressable onPress={() => onDisplayNotification()}>
+            <Pressable
+              onPress={() => {
+                onDisplayNotification();
+              }}>
               <Text style={[styles.button]}>{i18n.t('homePage.haqiq')}</Text>
             </Pressable>
           </View>

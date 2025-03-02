@@ -47,8 +47,7 @@ const HomeSrc = ({route}: any) => {
 
   const HandlePermission = async () => {
     const res = await notifee.requestPermission();
-
-    console.log(res);
+    // console.log(res);
   };
 
   useFocusEffect(
@@ -67,10 +66,8 @@ const HomeSrc = ({route}: any) => {
         const newsData = NewsList.data.filter(
           (item: any) => !existingIds.has(item.id),
         );
-
         newCombinedArray.push(...newsData);
         return newCombinedArray;
-        // return [...prev, ...NewsList?.data];
       });
     }
   }, [NewsList, AdsList]);
