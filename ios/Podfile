@@ -17,8 +17,7 @@ end
 target 'Haqiq' do
   config = use_native_modules!
 
-   # Enable static framework linkage
-   use_frameworks! :linkage => :static
+  # use_frameworks! :linkage => :static
 
   use_react_native!(
     :path => config[:reactNativePath],
