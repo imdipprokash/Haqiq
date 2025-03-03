@@ -120,6 +120,9 @@ const NewsCard = ({item}: {item: NewsItem}) => {
               style={
                 (styles.swipeText,
                 {
+                  fontFamily: I18nManager?.isRTL
+                    ? 'Noto-Kufi-Arabic'
+                    : 'RobotoFlex-Regular',
                   color: 'white',
                 })
               }>
@@ -129,7 +132,17 @@ const NewsCard = ({item}: {item: NewsItem}) => {
               onPress={() => {
                 // onDisplayNotification();
               }}>
-              <Text style={[styles.button]}>{i18n.t('homePage.haqiq')}</Text>
+              <Text
+                style={[
+                  styles.button,
+                  {
+                    fontFamily: I18nManager?.isRTL
+                      ? 'Noto-Kufi-Arabic'
+                      : 'RobotoFlex-Regular',
+                  },
+                ]}>
+                {i18n.t('homePage.haqiq')}
+              </Text>
             </Pressable>
           </View>
           <View style={{overflow: 'hidden'}}>
@@ -144,10 +157,26 @@ const NewsCard = ({item}: {item: NewsItem}) => {
                   openLink({url: item?.source_url});
                 }}>
                 <View style={[styles.sourceContainer]}>
-                  <Text style={[styles.source]}>
+                  <Text
+                    style={[
+                      styles.source,
+                      {
+                        fontFamily: I18nManager?.isRTL
+                          ? 'Noto-Kufi-Arabic'
+                          : 'RobotoFlex-Regular',
+                      },
+                    ]}>
                     {i18n.t('homePage.swipe_right')}({item.source.name})
                   </Text>
-                  <Text style={[styles.timeAgo]}>
+                  <Text
+                    style={[
+                      styles.timeAgo,
+                      {
+                        fontFamily: I18nManager?.isRTL
+                          ? 'Noto-Kufi-Arabic'
+                          : 'RobotoFlex-Regular',
+                      },
+                    ]}>
                     {i18n.t('homePage.createdBy')}
                     {item.author.first_name} {item.author.last_name}
                     {' ,'}
