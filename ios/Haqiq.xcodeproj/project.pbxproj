@@ -24,6 +24,7 @@
 		E83451536B1647459200513E /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E38A9BC90A74D0E90720D51 /* Poppins-Bold.ttf */; };
 		ECADB49209844A0CAEDBF5E7 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 630FF7C6C6E7403F8B97BF8C /* Poppins-Medium.ttf */; };
 		ED81017A9A0545A291A1BADA /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BC807E9E776141E2AD49D550 /* Poppins-SemiBold.ttf */; };
+		FB0E7F74C06A43038805E499 /* RobotoFlex-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 370001EE0848498CA0D1F72F /* RobotoFlex-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		E6A7055698EF4D5688110C08 /* Product Sans Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Product Sans Regular.ttf"; path = "../assets/fonts/Product Sans Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F33FA60DF921B023A1609DA2 /* libPods-Haqiq.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Haqiq.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		370001EE0848498CA0D1F72F /* RobotoFlex-Regular.ttf */ = {isa = PBXFileReference; name = "RobotoFlex-Regular.ttf"; path = "../assets/fonts/RobotoFlex-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				BC807E9E776141E2AD49D550 /* Poppins-SemiBold.ttf */,
 				E6A7055698EF4D5688110C08 /* Product Sans Regular.ttf */,
 				9FF5BF33BE0849218D0B0FA1 /* Product Sans Bold.ttf */,
+				370001EE0848498CA0D1F72F /* RobotoFlex-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				9E477D20D9624232B7F81CEC /* Product Sans Regular.ttf in Resources */,
 				7684BDD3236A4C0FB4119566 /* Product Sans Bold.ttf in Resources */,
 				BEFCA77669E66880F1D9504C /* PrivacyInfo.xcprivacy in Resources */,
+				FB0E7F74C06A43038805E499 /* RobotoFlex-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

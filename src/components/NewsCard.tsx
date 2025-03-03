@@ -92,9 +92,9 @@ const NewsCard = ({item}: {item: NewsItem}) => {
             style={[
               styles.title,
               {
-                fontFamily: I18nManager.isRTL
+                fontFamily: I18nManager?.isRTL
                   ? 'Noto-Kufi-Arabic'
-                  : 'Poppins-Regular',
+                  : 'RobotoFlex-Regular',
               },
             ]}>
             {item.title}
@@ -106,7 +106,7 @@ const NewsCard = ({item}: {item: NewsItem}) => {
               {
                 fontFamily: I18nManager?.isRTL
                   ? 'Noto-Kufi-Arabic'
-                  : 'Poppins-Regular',
+                  : 'RobotoFlex-Regular',
               },
             ]}>
             {item.content}
@@ -189,13 +189,13 @@ const styles = StyleSheet.create({
     height: hp(40),
   },
   title: {
-    fontSize: wp(4.7),
+    fontSize: wp(4.5),
     color: '#fff',
     marginBottom: hp(1.3),
   },
   description: {
     paddingVertical: 1,
-    fontSize: wp(3.7),
+    fontSize: wp(3.8),
     color: '#fff',
     lineHeight: hp(3),
     letterSpacing: 0.8,

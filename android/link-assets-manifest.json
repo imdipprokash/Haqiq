@@ -40,6 +40,10 @@
     {
       "path": "assets/fonts/Product Sans Regular.ttf",
       "sha1": "49bdf6c2dc3ca0c772da5bc3d10ff5da23badee3"
+    },
+    {
+      "path": "assets/fonts/RobotoFlex-Regular.ttf",
+      "sha1": "aa86044ecf85a7ec4f2d6622a759084b7f17c9c4"
     }
   ]
 }
