@@ -26,7 +26,7 @@ import {
 import BackButton from './back-button';
 import {InAppBrowser} from 'react-native-inappbrowser-reborn';
 import {timeAgo} from '../constants/timeAgo';
-import {onDisplayNotification} from '../helper/Notification';
+// import {onDisplayNotification} from '../helper/Notification';
 
 const NewsCard = ({item}: {item: NewsItem}) => {
   const sleep = (timeout: number) => {
@@ -127,7 +127,7 @@ const NewsCard = ({item}: {item: NewsItem}) => {
             </Text>
             <Pressable
               onPress={() => {
-                onDisplayNotification();
+                // onDisplayNotification();
               }}>
               <Text style={[styles.button]}>{i18n.t('homePage.haqiq')}</Text>
             </Pressable>

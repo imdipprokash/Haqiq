@@ -8,7 +8,7 @@ import usePost from '../../hooks/usePost';
 import moment from 'moment';
 import AdsCard from '../../components/AdsCard';
 import {useFocusEffect} from '@react-navigation/native';
-import notifee from '@notifee/react-native';
+// import notifee from '@notifee/react-native';
 
 type Props = {};
 
@@ -43,7 +43,7 @@ const HomeSrc = ({route}: any) => {
   });
 
   const HandlePermission = async () => {
-    const res = await notifee.requestPermission();
+    // const res = await notifee.requestPermission();
     // console.log(res);
   };
 
