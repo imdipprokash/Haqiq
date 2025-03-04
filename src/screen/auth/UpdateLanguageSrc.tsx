@@ -122,7 +122,7 @@ const UpdateLanguageSrc = (props: Props) => {
       // Update also i18n
       i18n.changeLanguage(selectLanguage || 'en');
 
-      // nav.navigate('HomeSrc');
+      nav.navigate('HomeSrc');
     }
   }, [authRes]);
 
