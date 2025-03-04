@@ -11,8 +11,6 @@ type Props = {
 };
 
 const Btn = ({text, onPress}: Props) => {
-  const {i18n} = useTranslation();
-  const {languageCode} = useAppSelector(s => s.auth);
   return (
     <Pressable style={styles.btnStyle} onPress={onPress}>
       <Text

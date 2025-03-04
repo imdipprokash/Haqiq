@@ -16,9 +16,10 @@
         "terms": "Terms & Conditions"
     },
     "homePage": {
-        "swipe_up": "Click Here for details from ",
+        "swipe_up": "Swipe Up For Next ",
         "swipe_right": "Click Here for details from ",
         "haqiq": "HAQIQ",
-        "createdBy": "Summaries by: "
+        "createdBy": "Summaries by: ",
+        "feedType": "Discover"
     }
 }

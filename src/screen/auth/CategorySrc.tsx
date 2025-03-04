@@ -31,7 +31,7 @@ type Props = {};
 
 const CategorySrc = () => {
   const nav = useNavigation<any>();
-  const {languageCode} = useAppSelector(s => s.auth);
+  const {languageCode, accessToken} = useAppSelector(s => s.auth);
   const [categories, setCategories] = useState<Category[]>([]);
 
   const isRTL = languageCode === 'ar';
@@ -47,7 +47,6 @@ const CategorySrc = () => {
     endPoint: `/news?search=${input}`,
   });
   useEffect(() => {
-    console.log(searchResultRes?.data);
     if (searchResultRes?.data) setSearchResult(searchResultRes?.data);
   }, [searchResultRes]);
   useEffect(() => {

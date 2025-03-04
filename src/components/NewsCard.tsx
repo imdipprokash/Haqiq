@@ -27,6 +27,7 @@ import BackButton from './back-button';
 import {InAppBrowser} from 'react-native-inappbrowser-reborn';
 import {timeAgo} from '../constants/timeAgo';
 import {onDisplayNotification} from '../helper/Notification';
+import {useAppSelector} from '../redux/store';
 
 const NewsCard = ({item, params}: {item: NewsItem; params: any}) => {
   const sleep = (timeout: number) => {
@@ -74,12 +75,14 @@ const NewsCard = ({item, params}: {item: NewsItem; params: any}) => {
     } catch (error) {}
   };
 
+  const {languageCode} = useAppSelector(s => s.auth);
+
   return (
     <Animated.View style={[styles.card]}>
       <StatusBar translucent backgroundColor={'transparent'} />
       <BackButton
         pathName={'CategorySrc'}
-        title={params ? item.category.title : 'Discover'}
+        title={params ? item.category.title : i18n.t('homePage.feedType')}
       />
       <View style={styles.slideContainer}>
         <Image source={{uri: item.image}} style={styles.image} />
@@ -92,9 +95,10 @@ const NewsCard = ({item, params}: {item: NewsItem; params: any}) => {
             style={[
               styles.title,
               {
-                fontFamily: I18nManager?.isRTL
-                  ? 'Noto-Kufi-Arabic'
-                  : 'RobotoFlex-Regular',
+                fontFamily:
+                  languageCode === 'ar'
+                    ? 'Noto-Kufi-Arabic'
+                    : 'RobotoFlex-Regular',
               },
             ]}>
             {item.title}
@@ -104,9 +108,10 @@ const NewsCard = ({item, params}: {item: NewsItem; params: any}) => {
             style={[
               styles.description,
               {
-                fontFamily: I18nManager?.isRTL
-                  ? 'Noto-Kufi-Arabic'
-                  : 'RobotoFlex-Regular',
+                fontFamily:
+                  languageCode === 'ar'
+                    ? 'Noto-Kufi-Arabic'
+                    : 'RobotoFlex-Regular',
               },
             ]}>
             {item.content}
@@ -120,9 +125,10 @@ const NewsCard = ({item, params}: {item: NewsItem; params: any}) => {
               style={
                 (styles.swipeText,
                 {
-                  fontFamily: I18nManager?.isRTL
-                    ? 'Noto-Kufi-Arabic'
-                    : 'RobotoFlex-Regular',
+                  fontFamily:
+                    languageCode === 'ar'
+                      ? 'Noto-Kufi-Arabic'
+                      : 'RobotoFlex-Regular',
                   color: 'white',
                 })
               }>
@@ -136,9 +142,10 @@ const NewsCard = ({item, params}: {item: NewsItem; params: any}) => {
                 style={[
                   styles.button,
                   {
-                    fontFamily: I18nManager?.isRTL
-                      ? 'Noto-Kufi-Arabic'
-                      : 'RobotoFlex-Regular',
+                    fontFamily:
+                      languageCode === 'ar'
+                        ? 'Noto-Kufi-Arabic'
+                        : 'RobotoFlex-Regular',
                   },
                 ]}>
                 {i18n.t('homePage.haqiq')}
@@ -161,9 +168,10 @@ const NewsCard = ({item, params}: {item: NewsItem; params: any}) => {
                     style={[
                       styles.source,
                       {
-                        fontFamily: I18nManager?.isRTL
-                          ? 'Noto-Kufi-Arabic'
-                          : 'RobotoFlex-Regular',
+                        fontFamily:
+                          languageCode === 'ar'
+                            ? 'Noto-Kufi-Arabic'
+                            : 'RobotoFlex-Regular',
                       },
                     ]}>
                     {i18n.t('homePage.swipe_right')}({item.source.name})
@@ -172,9 +180,10 @@ const NewsCard = ({item, params}: {item: NewsItem; params: any}) => {
                     style={[
                       styles.timeAgo,
                       {
-                        fontFamily: I18nManager?.isRTL
-                          ? 'Noto-Kufi-Arabic'
-                          : 'RobotoFlex-Regular',
+                        fontFamily:
+                          languageCode === 'ar'
+                            ? 'Noto-Kufi-Arabic'
+                            : 'RobotoFlex-Regular',
                       },
                     ]}>
                     {i18n.t('homePage.createdBy')}
@@ -251,8 +260,8 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#fff',
     paddingHorizontal: 20,
-    paddingVertical: SCREEN_WIDTH < 380 ? 2 : 10,
-    borderRadius: SCREEN_WIDTH < 380 ? 10 : 20,
+    paddingVertical: wp(1.4),
+    borderRadius: 99999,
     color: '#000',
   },
   backgroundImage: {

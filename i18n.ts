@@ -3,6 +3,7 @@ import {initReactI18next} from 'react-i18next';
 import {en, ar} from './src/constants/translations'; // Assuming these are your translation objects
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {I18nManager} from 'react-native';
+import {useAppSelector} from './src/redux/store';
 
 // Define a type for the language code
 

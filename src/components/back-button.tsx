@@ -21,16 +21,16 @@ export default function BackButton({
       onPress={() => nav.navigate(pathName)}
       style={[styles.backButton]}>
       {languageCode === 'ar' ? (
-        <ArrowRightIcon style={styles.backIconStyle} color={'#fff'} />
+        <ArrowRightIcon size={25} style={styles.backIconStyle} color={'#fff'} />
       ) : (
-        <ArrowLeftIcon style={styles.backIconStyle} color={'#fff'} />
+        <ArrowLeftIcon size={18} style={styles.backIconStyle} color={'#fff'} />
       )}
       <Text
         style={{
           color: '#fff',
           fontFamily:
-            languageCode === 'ar' ? 'Noto-Kufi-Arabic' : 'RobotoFlex-Regular',
-          marginTop: -4,
+            languageCode === 'ar' ? 'Noto-Kufi-Arabic' : 'Product Sans Regular',
+          // marginTop: -3,
         }}>
         {title}
       </Text>
@@ -44,20 +44,17 @@ const styles = StyleSheet.create({
     top: '5.5%',
     marginHorizontal: '4%', // Default LTR position
     zIndex: 1,
-    alignItems: 'center',
     flexDirection: 'row',
-    display: 'flex',
+    alignItems: 'center',
     backgroundColor: '#000',
-    justifyContent: 'center',
-    borderRadius: 99999,
+
+    borderRadius: 18,
     minWidth: wp(8),
     minHeight: hp(4.5),
-    paddingHorizontal: wp(2.5),
-    gap: 4,
+    paddingHorizontal: wp(2.7),
+    paddingRight: wp(4),
+    gap: wp(1.3),
   },
 
-  backIconStyle: {
-    // width: wp(5),
-    // height: hp(2),
-  },
+  backIconStyle: {},
 });

@@ -1,8 +1,8 @@
 import {
+  Alert,
   Animated,
   I18nManager,
   Image,
-  ImageBackground,
   Pressable,
   StatusBar,
   StyleSheet,
@@ -29,6 +29,14 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import Share from 'react-native-share';
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ArrowUpLeftIcon,
+  ArrowUpRightIcon,
+} from 'react-native-heroicons/mini';
+import {openLink} from '../../helper/InAppBrowser';
 
 type Props = {};
 
@@ -84,7 +92,7 @@ const UpdateLanguageSrc = (props: Props) => {
     usePostHandler,
   } = useAxios({
     data: {
-      device_id: 'string',
+      device_id: deviceId,
       country_code: selectedCountry,
       language_code: selectLanguage,
     },
@@ -96,7 +104,6 @@ const UpdateLanguageSrc = (props: Props) => {
     }
     if (languageList) {
       setLanguages(languageList);
-      languageList[0]?.code && setSelectedLanguages(languageList[0]?.code);
     }
   }, [countryList, languageList]);
 
@@ -112,7 +119,10 @@ const UpdateLanguageSrc = (props: Props) => {
         }),
       );
 
-      nav.navigate('HomeSrc');
+      // Update also i18n
+      i18n.changeLanguage(selectLanguage || 'en');
+
+      // nav.navigate('HomeSrc');
     }
   }, [authRes]);
 
@@ -139,11 +149,9 @@ const UpdateLanguageSrc = (props: Props) => {
     ).start(); // Start the animation loop
   }, []);
   const isRTL = selectLanguage === 'ar';
+
   return (
-    <View //ImageBackground
-      // source={require('../../../assets/images/background.png')}
-      // resizeMode="cover"
-      // imageStyle={{opacity: 1}}
+    <View
       style={[
         styles.image,
         {direction: isRTL ? 'rtl' : 'ltr', backgroundColor: '#000'},
@@ -154,14 +162,11 @@ const UpdateLanguageSrc = (props: Props) => {
           <TouchableOpacity
             style={[styles.backButton]}
             onPress={() => nav.navigate('HomeSrc')}>
-            <Image
-              source={require('../../../assets/images/BackIcon.png')}
-              style={{
-                width: wp(5),
-                height: hp(2),
-                transform: [{rotate: isRTL ? '180deg' : '0deg'}],
-              }}
-            />
+            {selectLanguage === 'ar' ? (
+              <ArrowRightIcon color={'#fff'} />
+            ) : (
+              <ArrowLeftIcon color={'#fff'} />
+            )}
             <Text
               style={[
                 styles.backText,
@@ -198,11 +203,12 @@ const UpdateLanguageSrc = (props: Props) => {
                 key={country.id}
                 onPress={() => {
                   setSelectCountry(country?.code || 'SA');
+                  setSelectedLanguages('');
                 }}
                 style={[
                   styles.button,
                   {
-                    paddingVertical: i18n.language === 'ar' ? '1.5%' : '2%',
+                    height: hp(6),
                   },
                   selectedCountry === country?.code && styles.selectedButton,
                 ]}>
@@ -211,7 +217,7 @@ const UpdateLanguageSrc = (props: Props) => {
                     styles.buttonText,
                     {
                       fontFamily:
-                        i18n.language === 'en'
+                        selectLanguage === 'en'
                           ? 'Product Sans Regular'
                           : 'Noto-Kufi-Arabic',
                       color:
@@ -256,7 +262,7 @@ const UpdateLanguageSrc = (props: Props) => {
                   style={[
                     styles.button,
                     {
-                      paddingVertical: i18n.language === 'ar' ? '1.5%' : '2%',
+                      height: hp(6),
                       backgroundColor:
                         selectLanguage !== item?.code ? 'black' : 'white',
                     },
@@ -266,7 +272,7 @@ const UpdateLanguageSrc = (props: Props) => {
                       styles.buttonText,
                       {
                         fontFamily:
-                          i18n.language === 'en'
+                          selectLanguage === 'en'
                             ? 'Product Sans Regular'
                             : 'Noto-Kufi-Arabic',
                         color:
@@ -278,6 +284,98 @@ const UpdateLanguageSrc = (props: Props) => {
                 </Pressable>
               ))}
           </View>
+
+          {/* Divider */}
+
+          <View
+            style={{
+              width: SCREEN_WIDTH,
+              height: 0.6,
+              backgroundColor: '#fff',
+              opacity: 0.47,
+              margin: 0,
+              marginLeft: '-5%',
+              marginVertical: hp(3),
+            }}
+          />
+
+          {/*  */}
+          <View style={{gap: hp(3)}}>
+            <Pressable
+              onPress={() => {
+                openLink({url: 'https://heroicons.com/mini'});
+              }}
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingRight: 1,
+                width: '100%',
+              }}>
+              <Text style={{color: 'white', fontSize: wp('4%')}}>
+                {selectLanguage === 'ar'
+                  ? 'الخصوصية والسياسة'
+                  : 'Privacy & Policy'}
+              </Text>
+              {selectLanguage === 'ar' ? (
+                <ArrowUpLeftIcon size={20} color="white" />
+              ) : (
+                <ArrowUpRightIcon size={20} color="white" />
+              )}
+            </Pressable>
+
+            <Pressable
+              onPress={() => {
+                openLink({url: 'https://heroicons.com/mini'});
+              }}
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingRight: 1,
+                width: '100%',
+              }}>
+              <Text style={{color: 'white', fontSize: wp('4%')}}>
+                {selectLanguage === 'ar'
+                  ? 'الشروط والأحكام'
+                  : 'Terms & Conditions'}
+              </Text>
+              {selectLanguage === 'ar' ? (
+                <ArrowUpLeftIcon size={20} color="white" />
+              ) : (
+                <ArrowUpRightIcon size={20} color="white" />
+              )}
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                const url = 'https://haqiq.co/';
+                const title = 'Haqqiq';
+                const message = 'Please check this out.';
+                Share.open({
+                  title,
+                  url,
+                  message,
+                })
+                  .then(res => {
+                    console.log(res);
+                  })
+                  .catch(err => {
+                    err && console.log(err);
+                  });
+              }}>
+              <Image
+                source={require('../../../assets/images/ShareImage.png')}
+                style={{width: wp(90), height: hp(15)}}
+                resizeMode="contain"
+              />
+            </Pressable>
+
+            <Text style={{color: '#fff', textAlign: 'center'}}>
+              Version : 1.0.1
+            </Text>
+          </View>
         </View>
         <View
           style={[
@@ -288,7 +386,11 @@ const UpdateLanguageSrc = (props: Props) => {
             <Btn
               text={isRTL ? 'تحديث' : 'Update'}
               onPress={() => {
-                usePostHandler();
+                if (selectLanguage) {
+                  usePostHandler();
+                } else {
+                  Alert.alert('Please select a language');
+                }
               }}
             />
           </Animated.View>
@@ -312,7 +414,6 @@ const styles = StyleSheet.create({
     marginTop: '80%',
   },
   countryGrid: {
-    // marginTop: i18n.locale === "ar" ? 0 : 20,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
