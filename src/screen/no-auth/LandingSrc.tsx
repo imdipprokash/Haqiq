@@ -20,7 +20,6 @@ import {
 } from 'react-native-responsive-screen';
 // import notifee from '@notifee/react-native';
 // import messaging from '@react-native-firebase/messaging';
-import {PermissionsAndroid} from 'react-native';
 
 type Props = {};
 
@@ -30,28 +29,7 @@ const LandingSrc = (props: Props) => {
 
   const logoOpacity = useRef(new Animated.Value(0)).current;
 
-  // async function requestUserPermission() {
-  //   PermissionsAndroid.request(
-  //     PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-  //   );
-
-  //   const authStatus = await messaging().requestPermission();
-  //   const enabled =
-  //     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-  //     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-  //   if (enabled) {
-  //     console.log('Authorization status:', authStatus);
-  //   }
-  // }
-
-  const HandlePermission = async () => {
-    // requestUserPermission();
-    // await notifee.requestPermission();
-  };
-
   useEffect(() => {
-    HandlePermission();
     Animated.sequence([
       Animated.timing(logoOpacity, {
         toValue: 1,

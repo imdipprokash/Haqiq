@@ -8,10 +8,21 @@ import CategorySrc from './src/screen/auth/CategorySrc';
 import UpdateLanguageSrc from './src/screen/auth/UpdateLanguageSrc';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import notifee, {AuthorizationStatus} from '@notifee/react-native';
+import useGetData from './src/hooks/useGetData';
 
 const Stack = createStackNavigator();
 const Route = () => {
   const {accessToken, languageCode} = useAppSelector(s => s.auth);
+
+  // const {
+  //   response: countryList,
+  //   loading: countryListLoading,
+  //   error: countyListError,
+  //   getData: GetCountryList,
+  // } = useGetData({
+  //   endPoint: `/countries/?page_size=100&page_number=1&enabled_status=all`,
+  // });
+
   async function requestNotificationPermission() {
     const settings = await notifee.requestPermission();
 

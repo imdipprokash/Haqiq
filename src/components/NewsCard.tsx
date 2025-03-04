@@ -28,7 +28,7 @@ import {InAppBrowser} from 'react-native-inappbrowser-reborn';
 import {timeAgo} from '../constants/timeAgo';
 import {onDisplayNotification} from '../helper/Notification';
 
-const NewsCard = ({item}: {item: NewsItem}) => {
+const NewsCard = ({item, params}: {item: NewsItem; params: any}) => {
   const sleep = (timeout: number) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   };
@@ -71,16 +71,16 @@ const NewsCard = ({item}: {item: NewsItem}) => {
         await sleep(800);
         // Alert.alert(JSON.stringify(result))
       } else Linking.openURL(url);
-    } catch (error) {
-      // Alert.alert(error.message)
-    }
+    } catch (error) {}
   };
 
   return (
     <Animated.View style={[styles.card]}>
       <StatusBar translucent backgroundColor={'transparent'} />
-
-      <BackButton pathName={'CategorySrc'} />
+      <BackButton
+        pathName={'CategorySrc'}
+        title={params ? item.category.title : 'Discover'}
+      />
       <View style={styles.slideContainer}>
         <Image source={{uri: item.image}} style={styles.image} />
         <View

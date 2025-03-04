@@ -21,6 +21,11 @@ import {Category, NewsItem} from '../../types/types';
 import useGetData from '../../hooks/useGetData';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  Cog6ToothIcon,
+} from 'react-native-heroicons/mini';
 
 type Props = {};
 
@@ -60,7 +65,6 @@ const CategorySrc = () => {
     getData();
     setInput('');
   }, []);
-  console.log(searchResult);
   return (
     <ImageBackground
       source={require('../../../assets/images/background.png')}
@@ -80,16 +84,12 @@ const CategorySrc = () => {
             <TouchableOpacity
               onPress={() => nav.navigate('HomeSrc')}
               style={[styles.backButton]}>
-              <Image
-                source={require('../../../assets/images/BackIcon.png')}
-                style={{
-                  width: wp(5),
-                  height: hp(2),
-                  transform: [
-                    {rotate: languageCode === 'ar' ? '180deg' : '0deg'},
-                  ],
-                }}
-              />
+              {languageCode === 'ar' ? (
+                <ArrowRightIcon style={styles.backIconStyle} color={'#fff'} />
+              ) : (
+                <ArrowLeftIcon style={styles.backIconStyle} color={'#fff'} />
+              )}
+
               <Text
                 style={[
                   styles.backText,
@@ -107,16 +107,7 @@ const CategorySrc = () => {
               onPress={() => {
                 nav.navigate('UpdateLanguageSrc');
               }}>
-              <Image
-                source={require('../../../assets/images/settings.png')}
-                style={{
-                  width: wp(5),
-                  height: hp(2.4),
-                  transform: [
-                    {rotate: languageCode === 'ar' ? '180deg' : '0deg'},
-                  ],
-                }}
-              />
+              <Cog6ToothIcon color={'#fff'} />
             </TouchableOpacity>
           </View>
 
@@ -304,7 +295,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     display: 'flex',
-    gap: 4,
+    marginLeft: -wp(2),
+  },
+  backIconStyle: {
+    width: wp(5),
+    height: hp(2),
   },
   headerText: {
     fontSize: 18,
@@ -340,7 +335,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: wp(4),
     paddingTop: 16,
     paddingBottom: 25,
   },

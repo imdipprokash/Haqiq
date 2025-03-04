@@ -2,31 +2,32 @@ import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import useGetData from '../../hooks/useGetData';
 import NewsCard from '../../components/NewsCard';
-import {SCREEN_HEIGHT} from '../../constants/constants';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/constants';
 import {useAppSelector} from '../../redux/store';
 import usePost from '../../hooks/usePost';
 import moment from 'moment';
 import AdsCard from '../../components/AdsCard';
 import {useFocusEffect} from '@react-navigation/native';
-// import notifee from '@notifee/react-native';
+import 'react-native-get-random-values';
+import {v4 as uuid} from 'uuid';
 
 type Props = {};
 
 const HomeSrc = ({route}: any) => {
-  const item = route.params;
+  const params = route.params;
 
   const [combine, setCombine] = useState<any[]>(
-    item?.SearchNews ? item?.SearchNews : [],
+    params?.SearchNews ? params?.SearchNews : [],
   );
   const [pageInfo, serPageInfo] = useState(1);
   const [currentItem, setCurrentItem] = useState<any>();
   const {languageCode, countryCode} = useAppSelector(s => s.auth);
   const {response: NewsList, getData: getNewsList} = useGetData({
-    endPoint: item?.SearchNews
+    endPoint: params?.SearchNews
       ? ''
-      : item?.item
+      : params?.item
       ? `/categories/${
-          item?.item
+          params?.item
         }/news?country_code=${countryCode}&language_code=${languageCode}&page_size=${10}&page_number=${pageInfo}&enabled_status=enabled`
       : `/news/?country_code=${countryCode}&language_code=${languageCode}`,
   });
@@ -75,29 +76,45 @@ const HomeSrc = ({route}: any) => {
     <View style={{flex: 1, backgroundColor: '#000'}}>
       {combine?.length > 0 ? (
         <FlatList
-          style={{direction: languageCode === 'ar' ? 'rtl' : 'ltr'}}
-          keyExtractor={item => item?.id?.toString()}
+          style={{
+            direction: languageCode === 'ar' ? 'rtl' : 'ltr',
+            width: SCREEN_WIDTH,
+            height: SCREEN_HEIGHT,
+          }}
+          keyExtractor={item => {
+            const id = uuid();
+            return id;
+          }}
           data={combine}
           renderItem={item =>
             item?.item?.content_type === 'news_articles' ? (
-              <NewsCard item={item?.item} />
+              <NewsCard item={item?.item} params={params} />
             ) : (
               <AdsCard item={item.item} />
             )
           }
-          snapToAlignment="start" // Aligns items to the top when scrolling
-          snapToInterval={SCREEN_HEIGHT} // Snaps to full-screen height
+          horizontal={false}
+          snapToAlignment="start"
+          snapToInterval={SCREEN_HEIGHT}
+          pagingEnabled
           decelerationRate="fast" // Makes scrolling snappier
           showsVerticalScrollIndicator={false}
           onViewableItemsChanged={onViewRef?.current}
           viewabilityConfig={viewConfigRef.current}
-          onEndReachedThreshold={2}
+          onEndReachedThreshold={0.2}
           onScrollEndDrag={() => {
-            if (!item) usePostHandler();
+            if (!params) usePostHandler();
           }}
           onEndReached={() => {
             serPageInfo(prev => prev + 1);
           }}
+          scrollEventThrottle={16} // Improves scroll event handling
+          disableIntervalMomentum={true} // Prevents multiple scrolls per swipe
+          getItemLayout={(data, index) => ({
+            length: SCREEN_HEIGHT, // Each item is exactly one full screen
+            offset: SCREEN_HEIGHT * index, // Calculates the offset for snapping
+            index,
+          })}
         />
       ) : (
         <ActivityIndicator size={30} color={'#47183A'} />

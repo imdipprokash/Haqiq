@@ -25,8 +25,6 @@ import useAxios from '../../hooks/usePost';
 import {useAppDispatch, useAppSelector} from '../../redux/store';
 import {ADD_AUTH, AuthType} from '../../redux/slices/authInfo';
 
-
-
 type Props = {};
 
 const LanguageSrc = (props: Props) => {
@@ -56,7 +54,7 @@ const LanguageSrc = (props: Props) => {
     error: countyListError,
     getData,
   } = useGetData({
-    endPoint: `/countries/?page_size=10&page_number=1&enabled_status=all`,
+    endPoint: `/countries/?page_size=100&page_number=1&enabled_status=all`,
   });
 
   const {
@@ -65,7 +63,6 @@ const LanguageSrc = (props: Props) => {
     error: languageListError,
     getData: getLanguage,
   } = useGetData({
-    
     endPoint: `/countries/${selectedCountry}/languages`,
   });
 
