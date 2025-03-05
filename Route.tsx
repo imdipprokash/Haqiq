@@ -1,4 +1,4 @@
-import {I18nManager, Platform, StyleSheet} from 'react-native';
+import {I18nManager, StyleSheet} from 'react-native';
 import React, {useEffect} from 'react';
 import LandingSrc from './src/screen/no-auth/LandingSrc';
 import LanguageSrc from './src/screen/no-auth/LanguageSrc';
@@ -7,7 +7,7 @@ import HomeSrc from './src/screen/auth/HomeSrc';
 import CategorySrc from './src/screen/auth/CategorySrc';
 import UpdateLanguageSrc from './src/screen/auth/UpdateLanguageSrc';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import notifee, {AuthorizationStatus, EventType} from '@notifee/react-native';
+import notifee, {AuthorizationStatus} from '@notifee/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
@@ -24,20 +24,6 @@ const Route = () => {
     } catch (error) {
       console.log(error);
     }
-
-    // Check if the user pressed the "Mark as read" action
-    //@ts-ignore
-
-    // if (type === EventType.ACTION_PRESS && pressAction.id === 'mark-as-read') {
-    //   // Update external API
-    //   await fetch(`https://my-api.com/chat/${notification.data.chatId}/read`, {
-    //     method: 'POST',
-    //   });
-
-    //   // Remove the notification
-    //   //@ts-ignore
-    //   await notifee.cancelNotification(notification?.id);
-    // }
   });
 
   async function requestNotificationPermission() {

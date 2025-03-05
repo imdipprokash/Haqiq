@@ -29,7 +29,7 @@ const HomeSrc = ({route}: any) => {
       ? `/categories/${
           params?.item
         }/news?country_code=${countryCode}&language_code=${languageCode}&page_size=${10}&page_number=${pageInfo}&enabled_status=enabled`
-      : `/news/?country_code=${countryCode}&language_code=${languageCode}`,
+      : `/news/?country_code=${countryCode}&language_code=${languageCode}&page_size=${10}&page_number=${pageInfo}&enabled_status=enabled`,
   });
 
   const {response, usePostHandler} = usePost({
@@ -68,51 +68,47 @@ const HomeSrc = ({route}: any) => {
   const viewConfigRef = useRef({viewAreaCoveragePercentThreshold: 10});
   return (
     <View style={{flex: 1, backgroundColor: '#000'}}>
-      {combine?.length > 0 ? (
-        <FlatList
-          style={{
-            direction: languageCode === 'ar' ? 'rtl' : 'ltr',
-            width: SCREEN_WIDTH,
-            height: SCREEN_HEIGHT,
-          }}
-          keyExtractor={item => {
-            const id = uuid();
-            return id;
-          }}
-          data={combine}
-          renderItem={item =>
-            item?.item?.content_type === 'news_articles' ? (
-              <NewsCard item={item?.item} params={params} />
-            ) : (
-              <AdsCard item={item.item} />
-            )
-          }
-          horizontal={false}
-          snapToAlignment="start"
-          snapToInterval={SCREEN_HEIGHT}
-          pagingEnabled
-          decelerationRate="fast" // Makes scrolling snappier
-          showsVerticalScrollIndicator={false}
-          onViewableItemsChanged={onViewRef?.current}
-          viewabilityConfig={viewConfigRef.current}
-          onEndReachedThreshold={0.2}
-          onScrollEndDrag={() => {
-            if (!params) usePostHandler();
-          }}
-          onEndReached={() => {
-            serPageInfo(prev => prev + 1);
-          }}
-          scrollEventThrottle={16} // Improves scroll event handling
-          disableIntervalMomentum={true} // Prevents multiple scrolls per swipe
-          getItemLayout={(data, index) => ({
-            length: SCREEN_HEIGHT, // Each item is exactly one full screen
-            offset: SCREEN_HEIGHT * index, // Calculates the offset for snapping
-            index,
-          })}
-        />
-      ) : (
-        <ActivityIndicator size={30} color={'#47183A'} />
-      )}
+      <FlatList
+        style={{
+          direction: languageCode === 'ar' ? 'rtl' : 'ltr',
+          width: SCREEN_WIDTH,
+          height: SCREEN_HEIGHT,
+        }}
+        keyExtractor={item => {
+          const id = uuid();
+          return id;
+        }}
+        data={combine}
+        renderItem={item =>
+          item?.item?.content_type === 'news_articles' ? (
+            <NewsCard item={item?.item} params={params} />
+          ) : (
+            <AdsCard item={item.item} />
+          )
+        }
+        horizontal={false}
+        snapToAlignment="start"
+        snapToInterval={SCREEN_HEIGHT}
+        pagingEnabled
+        decelerationRate="fast" // Makes scrolling snappier
+        showsVerticalScrollIndicator={false}
+        onViewableItemsChanged={onViewRef?.current}
+        viewabilityConfig={viewConfigRef.current}
+        onEndReachedThreshold={0.2}
+        onScrollEndDrag={() => {
+          if (!params) usePostHandler();
+        }}
+        onEndReached={() => {
+          serPageInfo(prev => prev + 1);
+        }}
+        scrollEventThrottle={16} // Improves scroll event handling
+        disableIntervalMomentum={true} // Prevents multiple scrolls per swipe
+        getItemLayout={(data, index) => ({
+          length: SCREEN_HEIGHT, // Each item is exactly one full screen
+          offset: SCREEN_HEIGHT * index, // Calculates the offset for snapping
+          index,
+        })}
+      />
     </View>
   );
 };
