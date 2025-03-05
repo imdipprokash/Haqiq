@@ -25,6 +25,7 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon,
   Cog6ToothIcon,
+  MagnifyingGlassIcon,
 } from 'react-native-heroicons/mini';
 
 type Props = {};
@@ -131,12 +132,10 @@ const CategorySrc = () => {
               placeholderTextColor="#666"
             />
             <TouchableOpacity style={styles.searchButton}>
-              {/* <Ionicons name="search" size={18} color="white" /> */}
-              <Image
-                source={require('../../../assets/images/SearchIcon.png')}
+              <MagnifyingGlassIcon
+                color={'#fff'}
+                size={14}
                 style={{
-                  width: 12,
-                  height: 12,
                   transform: [
                     {rotate: languageCode === 'ar' ? '90deg' : '0deg'},
                   ],
@@ -323,8 +322,8 @@ const styles = StyleSheet.create({
     fontWeight: 400,
   },
   searchButton: {
-    width: 35,
-    height: 35,
+    width: 28,
+    height: 28,
     backgroundColor: '#061D39',
     borderRadius: 22,
     justifyContent: 'center',

@@ -30,7 +30,6 @@ export default function BackButton({
           color: '#fff',
           fontFamily:
             languageCode === 'ar' ? 'Noto-Kufi-Arabic' : 'Product Sans Regular',
-          // marginTop: -3,
         }}>
         {title}
       </Text>
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#000',
 
-    borderRadius: 18,
+    borderRadius: wp(20),
     minWidth: wp(8),
     minHeight: hp(4.5),
     paddingHorizontal: wp(2.7),

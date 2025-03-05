@@ -43,14 +43,8 @@ const HomeSrc = ({route}: any) => {
     },
   });
 
-  const HandlePermission = async () => {
-    // const res = await notifee.requestPermission();
-    // console.log(res);
-  };
-
   useFocusEffect(
     React.useCallback(() => {
-      HandlePermission();
       getNewsList();
       return () => {};
     }, [pageInfo]),

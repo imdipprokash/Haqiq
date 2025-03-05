@@ -7,12 +7,38 @@ import HomeSrc from './src/screen/auth/HomeSrc';
 import CategorySrc from './src/screen/auth/CategorySrc';
 import UpdateLanguageSrc from './src/screen/auth/UpdateLanguageSrc';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import notifee, {AuthorizationStatus} from '@notifee/react-native';
+import notifee, {AuthorizationStatus, EventType} from '@notifee/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 const Route = () => {
   const {accessToken, languageCode} = useAppSelector(s => s.auth);
+
+  //Notifee
+  notifee.onBackgroundEvent(async ({type, detail}) => {
+    const {notification, pressAction} = detail;
+
+    try {
+      //@ts-ignore
+      notification?.id && (await notifee.cancelNotification(notification?.id));
+    } catch (error) {
+      console.log(error);
+    }
+
+    // Check if the user pressed the "Mark as read" action
+    //@ts-ignore
+
+    // if (type === EventType.ACTION_PRESS && pressAction.id === 'mark-as-read') {
+    //   // Update external API
+    //   await fetch(`https://my-api.com/chat/${notification.data.chatId}/read`, {
+    //     method: 'POST',
+    //   });
+
+    //   // Remove the notification
+    //   //@ts-ignore
+    //   await notifee.cancelNotification(notification?.id);
+    // }
+  });
 
   async function requestNotificationPermission() {
     const settings = await notifee.requestPermission();
@@ -48,7 +74,7 @@ const Route = () => {
 
   return accessToken ? (
     <Stack.Navigator
-      initialRouteName="UpdateLanguageSrc"
+      initialRouteName="HomeSrc"
       screenOptions={
         languageCode !== 'ar'
           ? {

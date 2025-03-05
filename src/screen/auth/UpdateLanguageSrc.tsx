@@ -303,7 +303,7 @@ const UpdateLanguageSrc = (props: Props) => {
           <View style={{gap: hp(3)}}>
             <Pressable
               onPress={() => {
-                openLink({url: 'https://heroicons.com/mini'});
+                openLink({url: 'https://haqiq.co/privacy-policy'});
               }}
               style={{
                 display: 'flex',
@@ -327,7 +327,7 @@ const UpdateLanguageSrc = (props: Props) => {
 
             <Pressable
               onPress={() => {
-                openLink({url: 'https://heroicons.com/mini'});
+                openLink({url: 'https://haqiq.co/terms-condition'});
               }}
               style={{
                 display: 'flex',
@@ -351,7 +351,7 @@ const UpdateLanguageSrc = (props: Props) => {
             <Pressable
               onPress={() => {
                 const url = 'https://haqiq.co/';
-                const title = 'Haqqiq';
+                const title = 'Haqiq';
                 const message = 'Please check this out.';
                 Share.open({
                   title,

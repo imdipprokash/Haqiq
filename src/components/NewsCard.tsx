@@ -1,6 +1,5 @@
 import {
   Animated,
-  I18nManager,
   Image,
   ImageBackground,
   Linking,
@@ -136,7 +135,11 @@ const NewsCard = ({item, params}: {item: NewsItem; params: any}) => {
             </Text>
             <Pressable
               onPress={() => {
-                onDisplayNotification();
+                onDisplayNotification({
+                  title: item.title,
+                  des: item.content,
+                  img: item.image,
+                });
               }}>
               <Text
                 style={[
@@ -230,6 +233,7 @@ const styles = StyleSheet.create({
     fontSize: wp(4.5),
     color: '#fff',
     marginBottom: hp(1.3),
+    lineHeight: hp(3.5),
   },
   description: {
     paddingVertical: 1,
