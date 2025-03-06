@@ -28,7 +28,15 @@ import {timeAgo} from '../constants/timeAgo';
 import {onDisplayNotification} from '../helper/Notification';
 import {useAppSelector} from '../redux/store';
 
-const NewsCard = ({item, params}: {item: NewsItem; params: any}) => {
+const NewsCard = ({
+  item,
+  params,
+  title,
+}: {
+  item: NewsItem;
+  params: any;
+  title: string;
+}) => {
   const sleep = (timeout: number) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   };
@@ -81,7 +89,13 @@ const NewsCard = ({item, params}: {item: NewsItem; params: any}) => {
       <StatusBar translucent backgroundColor={'transparent'} />
       <BackButton
         pathName={'CategorySrc'}
-        title={params ? item.category.title : i18n.t('homePage.feedType')}
+        title={
+          title
+            ? title
+            : params
+            ? item.category.title
+            : i18n.t('homePage.feedType')
+        }
       />
       <View style={styles.slideContainer}>
         <Image source={{uri: item.image}} style={styles.image} />

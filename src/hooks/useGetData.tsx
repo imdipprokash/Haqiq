@@ -11,7 +11,7 @@ const useGetData = ({endPoint, method}: Props) => {
     s => s.auth,
   );
   const dispatch = useAppDispatch();
-  console.log(endPoint);
+  // console.log(endPoint, accessToken);
   const [response, setResponse] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

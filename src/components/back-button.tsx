@@ -10,7 +10,11 @@ import {ArrowLeftIcon, ArrowRightIcon} from 'react-native-heroicons/mini';
 export default function BackButton({
   pathName,
   title,
+  color,
+  bgColor,
 }: {
+  bgColor?: string;
+  color?: string;
   pathName: string;
   title: string;
 }) {
@@ -19,15 +23,26 @@ export default function BackButton({
   return (
     <Pressable
       onPress={() => nav.navigate(pathName)}
-      style={[styles.backButton]}>
+      style={[
+        styles.backButton,
+        {backgroundColor: bgColor ? bgColor : '#000'},
+      ]}>
       {languageCode === 'ar' ? (
-        <ArrowRightIcon size={25} style={styles.backIconStyle} color={'#fff'} />
+        <ArrowRightIcon
+          size={25}
+          style={styles.backIconStyle}
+          color={color ? color : '#fff'}
+        />
       ) : (
-        <ArrowLeftIcon size={18} style={styles.backIconStyle} color={'#fff'} />
+        <ArrowLeftIcon
+          size={18}
+          style={styles.backIconStyle}
+          color={color ? color : '#fff'}
+        />
       )}
       <Text
         style={{
-          color: '#fff',
+          color: color ? color : '#fff',
           fontFamily:
             languageCode === 'ar' ? 'Noto-Kufi-Arabic' : 'Product Sans Regular',
         }}>
@@ -45,7 +60,6 @@ const styles = StyleSheet.create({
     zIndex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#000',
 
     borderRadius: wp(20),
     minWidth: wp(8),

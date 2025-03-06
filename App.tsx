@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistor, store} from './src/redux/store';
 import {Provider} from 'react-redux';
@@ -10,9 +10,24 @@ import 'react-native-reanimated';
 import Route from './Route';
 import './gesture-handler';
 import FlashSrc from './src/screen/FlashSrc';
+import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
+import NoInternet from './src/components/NoInternet';
 
 export default function App() {
   const [showFlashScreen, setShowFlashScreen] = React.useState(true);
+  const [refresh, setRefresh] = React.useState(1);
+
+  const [isOffline, setIsOffline] = React.useState(false);
+  React.useEffect(() => {
+    const removeNetInfoSubscription = NetInfo.addEventListener(
+      (state: NetInfoState) => {
+        const offline = !(state.isConnected && state.isInternetReachable);
+        setIsOffline(offline);
+      },
+    );
+
+    return () => removeNetInfoSubscription();
+  }, [refresh]);
 
   setTimeout(() => {
     setShowFlashScreen(false);
@@ -27,6 +42,12 @@ export default function App() {
                 <FlashSrc
                   setShowFlashScreen={() => {
                     setShowFlashScreen(!showFlashScreen);
+                  }}
+                />
+              ) : isOffline ? (
+                <NoInternet
+                  onPress={() => {
+                    setRefresh(refresh + 1);
                   }}
                 />
               ) : (
