@@ -12,19 +12,19 @@ import 'react-native-get-random-values';
 import {v4 as uuid} from 'uuid';
 import NoFeed from '../../components/NoFeed';
 import {Set_Content} from '../../redux/slices/contentSlice';
+import LoadingScr from '../../components/LoadingScr';
 
 type Props = {};
 
 const HomeSrc = ({route}: any) => {
   const params = route.params;
-  const dispatch = useAppDispatch();
 
   const [pageInfo, serPageInfo] = useState(1);
   const [currentItem, setCurrentItem] = useState<any>();
   const {languageCode, countryCode} = useAppSelector(s => s.auth);
-  const {content} = useAppSelector(s => s.content);
+
   const [combine, setCombine] = useState<any[]>(
-    params?.SearchNews ? params?.SearchNews : content ? content : [],
+    params?.SearchNews ? params?.SearchNews : [],
   );
   const {
     response: NewsList,
@@ -39,7 +39,7 @@ const HomeSrc = ({route}: any) => {
         }/news?country_code=${countryCode}&language_code=${languageCode}&page_size=${10}&page_number=${pageInfo}&enabled_status=enabled`
       : `/news/?country_code=${countryCode}&language_code=${languageCode}&page_size=${10}&page_number=${pageInfo}&enabled_status=enabled`,
   });
-
+  const [dataLoading, setDataLoading] = useState(loading);
   const {usePostHandler} = usePost({
     endPoint: '/impressions',
     data: {
@@ -60,14 +60,7 @@ const HomeSrc = ({route}: any) => {
 
   useEffect(() => {
     if (NewsList?.data) {
-      if (pageInfo) {
-        dispatch(Set_Content({showSplashScr: false, content: NewsList?.data}));
-      }
-      setCombine((prev: any) => {
-        const newCombinedArray: any[] = [...prev]; // Preserve old data
-        newCombinedArray.push(...NewsList?.data);
-        return newCombinedArray;
-      });
+      setCombine((prev: any) => [...prev, ...NewsList?.data]);
     }
   }, [NewsList]);
 
@@ -77,9 +70,9 @@ const HomeSrc = ({route}: any) => {
     }
   });
   const viewConfigRef = useRef({viewAreaCoveragePercentThreshold: 10});
+
   return (
     <View style={{flex: 1, backgroundColor: '#000'}}>
-      {!loading && combine.length === 0 && <NoFeed onPress={() => {}} />}
       <FlatList
         style={{
           direction: languageCode === 'ar' ? 'rtl' : 'ltr',
@@ -90,10 +83,14 @@ const HomeSrc = ({route}: any) => {
           const id = uuid();
           return id;
         }}
-        data={combine}
+        data={combine} //combine
         renderItem={item =>
           item?.item?.content_type === 'news_articles' ? (
-            <NewsCard title={params?.SearchNews && "Search"} item={item?.item} params={params} />
+            <NewsCard
+              title={params?.SearchNews && 'Search'}
+              item={item?.item}
+              params={params}
+            />
           ) : (
             <AdsCard item={item.item} />
           )
@@ -113,6 +110,7 @@ const HomeSrc = ({route}: any) => {
         onEndReached={() => {
           serPageInfo(prev => prev + 1);
         }}
+        refreshing={loading}
         scrollEventThrottle={16} // Improves scroll event handling
         disableIntervalMomentum={true} // Prevents multiple scrolls per swipe
         getItemLayout={(data, index) => ({
@@ -120,6 +118,10 @@ const HomeSrc = ({route}: any) => {
           offset: SCREEN_HEIGHT * index, // Calculates the offset for snapping
           index,
         })}
+        disableVirtualization={false}
+        ListEmptyComponent={() =>
+          !dataLoading ? <LoadingScr /> : <NoFeed onPress={() => {}} />
+        }
       />
     </View>
   );

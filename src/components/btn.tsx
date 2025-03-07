@@ -1,8 +1,6 @@
 import {Platform, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {normalize, TEXT_SIZE} from '../constants/constants';
-import {useTranslation} from 'react-i18next';
-import {useAppSelector} from '../redux/store';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 
 type Props = {

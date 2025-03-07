@@ -3,6 +3,7 @@ import {
   Animated,
   I18nManager,
   Image,
+  Platform,
   Pressable,
   StatusBar,
   StyleSheet,
@@ -17,6 +18,7 @@ import {
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
   SIZES,
+  TEXT_SIZE,
   normalize,
 } from '../../constants/constants';
 import {Country, Language} from '../../types/types';
@@ -28,6 +30,7 @@ import {useNavigation} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
+  heightPercentageToDP,
 } from 'react-native-responsive-screen';
 import Share from 'react-native-share';
 import {
@@ -313,7 +316,15 @@ const UpdateLanguageSrc = (props: Props) => {
                 paddingRight: 1,
                 width: '100%',
               }}>
-              <Text style={{color: 'white', fontSize: wp('4%')}}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: wp('4%'),
+                  fontFamily:
+                    selectLanguage === 'en'
+                      ? 'Product Sans Regular'
+                      : 'Noto-Kufi-Arabic',
+                }}>
                 {selectLanguage === 'ar'
                   ? 'الخصوصية والسياسة'
                   : 'Privacy & Policy'}
@@ -337,7 +348,15 @@ const UpdateLanguageSrc = (props: Props) => {
                 paddingRight: 1,
                 width: '100%',
               }}>
-              <Text style={{color: 'white', fontSize: wp('4%')}}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: wp('4%'),
+                  fontFamily:
+                    selectLanguage === 'en'
+                      ? 'Product Sans Regular'
+                      : 'Noto-Kufi-Arabic',
+                }}>
                 {selectLanguage === 'ar'
                   ? 'الشروط والأحكام'
                   : 'Terms & Conditions'}
@@ -383,16 +402,32 @@ const UpdateLanguageSrc = (props: Props) => {
             {gap: i18n.language === 'en' ? normalize(18) : 15},
           ]}>
           <Animated.View>
-            <Btn
-              text={isRTL ? 'تحديث' : 'Update'}
+            <Pressable
+              style={styles.btnStyle}
               onPress={() => {
                 if (selectLanguage) {
                   usePostHandler();
                 } else {
                   Alert.alert('Please select a language');
                 }
-              }}
-            />
+              }}>
+              <Text
+                style={[
+                  styles.textStyle,
+                  {
+                    fontFamily:
+                      selectLanguage === 'en'
+                        ? 'Product Sans Regular'
+                        : 'Noto-Kufi-Arabic',
+                    paddingVertical:
+                      selectLanguage === 'en'
+                        ? heightPercentageToDP(2.2)
+                        : heightPercentageToDP(1.2),
+                  },
+                ]}>
+                {isRTL ? 'تحديث' : 'Update'}
+              </Text>
+            </Pressable>
           </Animated.View>
         </View>
       </View>
@@ -494,5 +529,20 @@ const styles = StyleSheet.create({
     color: 'white',
     marginLeft: 8,
     fontSize: 16,
+  },
+  btnStyle: {
+    backgroundColor: '#fff',
+    borderRadius: 18,
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    borderCurve: 'continuous',
+  },
+  textStyle: {
+    color: '#000',
+    fontSize: normalize(TEXT_SIZE.medium),
+    textAlign: 'center',
   },
 });
