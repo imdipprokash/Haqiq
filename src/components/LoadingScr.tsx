@@ -29,11 +29,13 @@ const LoadingScr = (props: Props) => {
             alignSelf="center"
             width={wp(95)}
             height={hp(4)}
+            borderRadius={6}
           />
           <SkeletonPlaceholder.Item
             alignSelf="center"
             width={wp(95)}
             height={hp(4)}
+            borderRadius={6}
           />
         </SkeletonPlaceholder.Item>
       </SkeletonPlaceholder>
@@ -48,46 +50,55 @@ const LoadingScr = (props: Props) => {
             alignSelf="center"
             width={wp(95)}
             height={hp(3)}
+            borderRadius={4}
           />
           <SkeletonPlaceholder.Item
             alignSelf="center"
             width={wp(95)}
             height={hp(3)}
+            borderRadius={4}
           />
           <SkeletonPlaceholder.Item
             alignSelf="center"
             width={wp(95)}
             height={hp(3)}
+            borderRadius={4}
           />
           <SkeletonPlaceholder.Item
             alignSelf="center"
             width={wp(95)}
             height={hp(3)}
+            borderRadius={4}
           />
           <SkeletonPlaceholder.Item
             alignSelf="center"
             width={wp(95)}
             height={hp(3)}
+            borderRadius={4}
           />
           <SkeletonPlaceholder.Item
             alignSelf="center"
             width={wp(95)}
             height={hp(3)}
+            borderRadius={4}
           />
           <SkeletonPlaceholder.Item
             alignSelf="center"
             width={wp(95)}
             height={hp(3)}
+            borderRadius={4}
           />
           <SkeletonPlaceholder.Item
             alignSelf="center"
             width={wp(95)}
             height={hp(3)}
+            borderRadius={4}
           />
           <SkeletonPlaceholder.Item
             alignSelf="center"
             width={wp(95)}
             height={hp(3)}
+            borderRadius={4}
           />
         </SkeletonPlaceholder.Item>
       </SkeletonPlaceholder>
@@ -98,6 +109,7 @@ const LoadingScr = (props: Props) => {
             alignSelf="center"
             width={wp(95)}
             height={hp(8)}
+            borderRadius={4}
           />
           <SkeletonPlaceholder.Item
             alignSelf="center"

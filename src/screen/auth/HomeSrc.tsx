@@ -22,6 +22,9 @@ const HomeSrc = ({route}: any) => {
   const [pageInfo, serPageInfo] = useState(1);
   const [currentItem, setCurrentItem] = useState<any>();
   const {languageCode, countryCode} = useAppSelector(s => s.auth);
+  const [dataLoading, setDataLoading] = useState(false);
+
+  console.log(languageCode);
 
   const [combine, setCombine] = useState<any[]>(
     params?.SearchNews ? params?.SearchNews : [],
@@ -39,7 +42,7 @@ const HomeSrc = ({route}: any) => {
         }/news?country_code=${countryCode}&language_code=${languageCode}&page_size=${10}&page_number=${pageInfo}&enabled_status=enabled`
       : `/news/?country_code=${countryCode}&language_code=${languageCode}&page_size=${10}&page_number=${pageInfo}&enabled_status=enabled`,
   });
-  const [dataLoading, setDataLoading] = useState(loading);
+
   const {usePostHandler} = usePost({
     endPoint: '/impressions',
     data: {
@@ -59,10 +62,14 @@ const HomeSrc = ({route}: any) => {
   );
 
   useEffect(() => {
-    if (NewsList?.data) {
+    if (NewsList?.data && !loading) {
       setCombine((prev: any) => [...prev, ...NewsList?.data]);
+      setDataLoading(false);
     }
-  }, [NewsList]);
+    if (loading) {
+      setDataLoading(loading);
+    }
+  }, [NewsList, loading]);
 
   const onViewRef = useRef(({viewableItems}: any) => {
     if (viewableItems.length > 0) {
@@ -120,7 +127,15 @@ const HomeSrc = ({route}: any) => {
         })}
         disableVirtualization={false}
         ListEmptyComponent={() =>
-          !dataLoading ? <LoadingScr /> : <NoFeed onPress={() => {}} />
+          dataLoading ? (
+            <LoadingScr />
+          ) : (
+            <NoFeed
+              onPress={() => {
+                getNewsList();
+              }}
+            />
+          )
         }
       />
     </View>
