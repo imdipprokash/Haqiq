@@ -111,13 +111,13 @@ const UpdateLanguageSrc = (props: Props) => {
   }, [countryList, languageList]);
 
   useEffect(() => {
-    if (authRes?.access_token) {
+    if (authRes?.access_token && selectLanguage && selectedCountry) {
       dispatch(
         ADD_AUTH({
           accessToken: authRes?.access_token,
           refreshToken: authRes?.refresh_token,
-          countryCode: selectedCountry || 'SA',
-          languageCode: selectLanguage || 'ar',
+          countryCode: selectedCountry,
+          languageCode: selectLanguage,
           deviceId: deviceId,
         }),
       );

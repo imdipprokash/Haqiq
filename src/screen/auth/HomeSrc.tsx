@@ -31,7 +31,7 @@ const HomeSrc = ({route}: any) => {
   );
   const {
     response: NewsList,
-    getData: getNewsList,
+    getData: getNewsList,   
     loading,
   } = useGetData({
     endPoint: params?.SearchNews

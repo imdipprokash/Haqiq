@@ -2,7 +2,6 @@ import {
   Animated,
   Image,
   ImageBackground,
-  Linking,
   Pressable,
   StatusBar,
   StyleSheet,
@@ -17,16 +16,15 @@ import {
   SCREEN_WIDTH,
 } from '../constants/constants';
 import i18n from '../../i18n';
-import {NewsItem} from '../types/types';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import BackButton from './back-button';
-import {InAppBrowser} from 'react-native-inappbrowser-reborn';
 import {timeAgo} from '../constants/timeAgo';
 import {onDisplayNotification} from '../helper/Notification';
 import {useAppSelector} from '../redux/store';
+import {openLink} from '../helper/InAppBrowser';
 
 const NewsCard = ({
   item,
@@ -37,52 +35,10 @@ const NewsCard = ({
   params: any;
   title: string;
 }) => {
+  const {languageCode} = useAppSelector(s => s.auth);
   const sleep = (timeout: number) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   };
-
-  const openLink = async ({url}: {url: string}) => {
-    try {
-      if (await InAppBrowser.isAvailable()) {
-        const result = await InAppBrowser.open(url, {
-          // iOS Properties
-          dismissButtonStyle: 'cancel',
-          preferredBarTintColor: '#47183A',
-          preferredControlTintColor: 'white',
-          readerMode: false,
-          animated: true,
-          modalPresentationStyle: 'fullScreen',
-          modalTransitionStyle: 'coverVertical',
-          modalEnabled: true,
-          enableBarCollapsing: false,
-          // Android Properties
-          showTitle: true,
-          toolbarColor: '#47183A',
-          secondaryToolbarColor: 'black',
-          navigationBarColor: 'black',
-          navigationBarDividerColor: 'white',
-          enableUrlBarHiding: true,
-          enableDefaultShare: true,
-          forceCloseOnRedirection: false,
-          // Specify full animation resource identifier(package:anim/name)
-          // or only resource name(in case of animation bundled with app).
-          animations: {
-            startEnter: 'slide_in_right',
-            startExit: 'slide_out_left',
-            endEnter: 'slide_in_left',
-            endExit: 'slide_out_right',
-          },
-          headers: {
-            'my-custom-header': 'my custom header value',
-          },
-        });
-        await sleep(800);
-        // Alert.alert(JSON.stringify(result))
-      } else Linking.openURL(url);
-    } catch (error) {}
-  };
-
-  const {languageCode} = useAppSelector(s => s.auth);
 
   return (
     <Animated.View style={[styles.card]}>
