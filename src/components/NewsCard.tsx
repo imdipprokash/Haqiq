@@ -33,7 +33,7 @@ const NewsCard = ({
   params,
   title,
 }: {
-  item: NewsItem;
+  item: any;
   params: any;
   title: string;
 }) => {

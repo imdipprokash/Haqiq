@@ -12,6 +12,7 @@ import './gesture-handler';
 import FlashSrc from './src/screen/FlashSrc';
 import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 import NoInternet from './src/components/NoInternet';
+import DeckSwiper from './src/TryNew/DeckSwiper';
 
 export default function App() {
   const [showFlashScreen, setShowFlashScreen] = React.useState(true);
@@ -32,6 +33,7 @@ export default function App() {
   setTimeout(() => {
     setShowFlashScreen(false);
   }, 1800);
+
   return (
     <Provider store={store}>
       <GestureHandlerRootView>

@@ -15,7 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import {openLink} from '../helper/InAppBrowser';
 
-const AdsCard = ({item}: {item: AdItem}) => {
+const AdsCard = ({item}: {item: any}) => {
   return (
     <FastImage
       source={{

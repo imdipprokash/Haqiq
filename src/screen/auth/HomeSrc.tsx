@@ -1,4 +1,4 @@
-import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import useGetData from '../../hooks/useGetData';
 import NewsCard from '../../components/NewsCard';
@@ -11,8 +11,8 @@ import {useFocusEffect} from '@react-navigation/native';
 import 'react-native-get-random-values';
 import {v4 as uuid} from 'uuid';
 import NoFeed from '../../components/NoFeed';
-import {Set_Content} from '../../redux/slices/contentSlice';
 import LoadingScr from '../../components/LoadingScr';
+import DeckSwiper from '../../TryNew/DeckSwiper';
 
 type Props = {};
 
@@ -78,6 +78,7 @@ const HomeSrc = ({route}: any) => {
   });
   const viewConfigRef = useRef({viewAreaCoveragePercentThreshold: 10});
 
+  // return <DeckSwiper />;
   return (
     <View style={{flex: 1, backgroundColor: '#000'}}>
       <FlatList
