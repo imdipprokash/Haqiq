@@ -21,17 +21,17 @@ const HomeSrc = ({route}: any) => {
 
   const [pageInfo, serPageInfo] = useState(1);
   const [currentItem, setCurrentItem] = useState<any>();
-  const {languageCode, countryCode} = useAppSelector(s => s.auth);
+  const {languageCode, countryCode, accessToken} = useAppSelector(s => s.auth);
   const [dataLoading, setDataLoading] = useState(false);
 
-  console.log(languageCode);
+  console.log(languageCode, accessToken);
 
   const [combine, setCombine] = useState<any[]>(
     params?.SearchNews ? params?.SearchNews : [],
   );
   const {
     response: NewsList,
-    getData: getNewsList,   
+    getData: getNewsList,
     loading,
   } = useGetData({
     endPoint: params?.SearchNews
